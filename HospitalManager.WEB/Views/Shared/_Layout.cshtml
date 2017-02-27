@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="HospitalManager">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>HospitalManager</title>
+
+    <!-- Page styles -->
+    @Styles.Render("https://fonts.googleapis.com/icon?family=Material+Icons")
+    @Styles.Render("~/Content/materialize.min.css")
+    @Styles.Render("~/Content/styles.css")
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper white">
+                <a href="@Url.RouteUrl(new {controller = "Home", action = "Index"})" class="brand-logo">
+                    <span class="grey-text">HospitalManager</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="page-footer white">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="footer-text">HospitalManager</h5>
+                    <p class="footer-text">HospitalManager example page</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="footer-text">Links</h5>
+                    <ul>
+                        <li><a class="footer-text" href="@Url.RouteUrl(new {controller = "Home", action = "Index"})">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container grey-text text-darken-1">
+                © 2017 Alexey Budyanskiy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Page scripts -->
+    @Scripts.Render("~/Scripts/jquery-3.1.1.min.js")
+    @Scripts.Render("~/Scripts/materialize.min.js")
+</body>
+</html>
