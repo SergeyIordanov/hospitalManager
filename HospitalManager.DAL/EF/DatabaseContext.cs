@@ -1,6 +1,7 @@
 using System.Data.Entity;
 using HospitalManager.DAL.Entities;
 using HospitalManager.DAL.Entities.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospitalManager.DAL.EF
 {
@@ -22,6 +23,9 @@ namespace HospitalManager.DAL.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
             base.OnModelCreating(modelBuilder);
         }
     }

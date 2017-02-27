@@ -1,14 +1,24 @@
 ﻿using HospitalManager.DAL.Entities.Identity;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HospitalManager.DAL.Identity
 {
     public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {
-        public ApplicationRoleManager(RoleStore<ApplicationRole> store) : base(store)
+        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> store) : base(store)
         {
-            
+            //var adminRole = new ApplicationRole
+            //{
+            //    Name = "admin"
+            //};
+
+            //var userRole = new ApplicationRole
+            //{
+            //    Name = "user"
+            //};
+
+            //store.CreateAsync(adminRole);
+            //store.CreateAsync(userRole);
         }
     }
 }
