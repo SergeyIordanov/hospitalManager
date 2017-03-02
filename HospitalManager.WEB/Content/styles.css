@@ -10,3 +10,7 @@
   }
 
   /* <<- Sticky footer options*/
+
+  nav ul.menu-link a {
+      color: grey !important;
+  }

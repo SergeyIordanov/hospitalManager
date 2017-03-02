@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using HospitalManager.BLL.DTO;
-using HospitalManager.BLL.Infrastructure.Identity;
+using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
 using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Interfaces;
@@ -13,68 +13,69 @@ namespace HospitalManager.BLL.Services
 {
     public class UserService : IUserService
     {
-        IUnitOfWork Database { get; set; }
+        private readonly IUnitOfWork _database;
 
         public UserService(IUnitOfWork uow)
         {
-            Database = uow;
+            _database = uow;
         }
 
-        public async Task<OperationDetails> Create(UserDto userDto)
+        public async Task ExternalRegisterAsync(UserDto userDto, UserLoginInfo info)
         {
-            var user = await Database.UserManager.FindByEmailAsync(userDto.Email);
+            await CheckIfUserExists(userDto);
 
-            if (user != null)
-            {
-                return new OperationDetails(false, "User with such login already exists", "Email");
-            }
+            var user = await CreateApplicationUser(userDto);
 
-            user = new ApplicationUser
-            {
-                Email = userDto.Email,
-                UserName = userDto.Email
-            };
+            await _database.UserManager.AddLoginAsync(user.Id, info);
+            await _database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
 
-            var result = await Database.UserManager.CreateAsync(user, userDto.Password);
-
-            if (result.Errors.Any())
-            {
-                return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
-            }
-
-            await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
-
-            var clientProfile = new ClientProfile
-            {
-                Id = user.Id,
-                Address = userDto.Address,
-                Name = userDto.Name
-            };
-
-            Database.ClientManager.Create(clientProfile);
-            await Database.SaveAsync();
-
-            return new OperationDetails(true, "Succesfull registration", string.Empty);
+            await CreateClientProfile(userDto, user);
         }
 
-        public async Task<ClaimsIdentity> Authenticate(UserDto userDto)
+        public async Task RegisterAsync(UserDto userDto)
+        {
+            await CheckIfUserExists(userDto);
+
+            var user = await CreateApplicationUser(userDto);
+
+            await _database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
+
+            await CreateClientProfile(userDto, user);
+        }
+
+        public async Task<ClaimsIdentity> SignInAsync(UserDto userDto)
         {
             ClaimsIdentity claim = null;
-            var user = await Database.UserManager.FindAsync(userDto.Email, userDto.Password);
+
+            var user = await _database.UserManager.FindAsync(userDto.Email, userDto.Password);
 
             if (user != null)
             {
-                claim = await Database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                claim = await _database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             }
 
             return claim;
         }
 
-        public async Task SetInitialData(UserDto adminDto, List<string> roles)
+        public async Task<ClaimsIdentity> ExternalSignInAsync(UserLoginInfo loginInfo)
+        {
+            ClaimsIdentity claim = null;
+
+            var user = await _database.UserManager.FindAsync(loginInfo);
+
+            if (user != null)
+            {
+                claim = await _database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            }
+
+            return claim;
+        }
+
+        public async Task SetInitialDataAsync(UserDto adminDto, IEnumerable<string> roles)
         {
             foreach (var roleName in roles)
             {
-                var role = await Database.RoleManager.FindByNameAsync(roleName);
+                var role = await _database.RoleManager.FindByNameAsync(roleName);
                 if (role == null)
                 {
                     role = new ApplicationRole
@@ -82,16 +83,66 @@ namespace HospitalManager.BLL.Services
                         Name = roleName
                     };
 
-                    await Database.RoleManager.CreateAsync(role);
+                    await _database.RoleManager.CreateAsync(role);
                 }
             }
 
-            await Create(adminDto);
+            await RegisterAsync(adminDto);
         }
 
         public void Dispose()
         {
-            Database.Dispose();
+            _database.Dispose();
+        }
+
+        private async Task CreateClientProfile(UserDto userDto, ApplicationUser user)
+        {
+            var clientProfile = new ClientProfile
+            {
+                Id = user.Id,
+                Address = userDto.Address,
+                Name = userDto.Name
+            };
+
+            _database.ClientManager.Create(clientProfile);
+            await _database.SaveAsync();
+        }
+
+        private async Task<ApplicationUser> CreateApplicationUser(UserDto userDto)
+        {
+            var user = new ApplicationUser
+            {
+                Email = userDto.Email,
+                UserName = userDto.Email
+            };
+
+            IdentityResult result;
+
+            if (userDto.Password != null)
+            {
+                result = await _database.UserManager.CreateAsync(user, userDto.Password);
+            }
+            else
+            {
+                result = await _database.UserManager.CreateAsync(user);
+            }
+
+            if (result.Errors.Any())
+            {
+                throw new AuthException(string.Empty, result.Errors.FirstOrDefault());
+            }
+
+            return user;
+        }
+
+        private async Task CheckIfUserExists(UserDto userDto)
+        {
+            var user = await _database.UserManager.FindByEmailAsync(userDto.Email);
+
+            if (user != null)
+            {
+                throw new AuthException("Email", "User with such login already exists");
+            }
         }
     }
 }

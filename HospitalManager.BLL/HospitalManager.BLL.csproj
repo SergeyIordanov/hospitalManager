@@ -68,13 +68,13 @@
     <Compile Include="DTO\TempDto.cs" />
     <Compile Include="DTO\ExampleDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
+    <Compile Include="Exceptions\AuthException.cs" />
     <Compile Include="Exceptions\EntityException.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\UniqueValueAlreadyExistsException.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Infrastructure\AutomapperRegistration\DtoToEntityProfile.cs" />
     <Compile Include="Infrastructure\AutomapperRegistration\EntityToDtoProfile.cs" />
-    <Compile Include="Infrastructure\Identity\OperationDetails.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

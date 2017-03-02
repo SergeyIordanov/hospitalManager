@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -21,6 +21,26 @@
                 <a href="@Url.RouteUrl(new {controller = "Home", action = "Index"})" class="brand-logo">
                     <span class="grey-text">HospitalManager</span>
                 </a>
+                
+                <ul class="right hide-on-med-and-down menu-link">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            @Html.ActionLink("Register", "Register", "Account")
+                        </li>
+
+                        <li>
+                            @Html.ActionLink("Login", "Login", "Account")
+                        </li>
+                    }
+                    else
+                    {
+                        <span class="grey-text">Hello, @User.Identity.Name</span>
+                        <li class="right hide-on-med-and-down">
+                             @Html.ActionLink("Logout", "Logout", "Account")
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </div>

@@ -6,7 +6,7 @@
     <div class="form-horizontal">
         <h4 class="center white-text">Login</h4>
         <h6 class="center">Do you have an account?
-            @Html.ActionLink("Register", "Register", "Account", new { @class="text-orange"})
+            @Html.ActionLink("Register", "Register", new { controller = "Account", action="Register", @class="text-orange"})
         </h6>
         <div class="row">
             <div class="col s12 l10 push-l1">
