@@ -1,6 +1,4 @@
 using AutoMapper;
-using HospitalManager.BLL.DTO;
-using HospitalManager.DAL.Entities;
 
 namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
 {
@@ -8,10 +6,6 @@ namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
     {
         public EntityToDtoProfile()
         {
-
-			CreateMap<Temp, TempDto>();
-
-            CreateMap<Example, ExampleDto>();        
         }
     }
 }

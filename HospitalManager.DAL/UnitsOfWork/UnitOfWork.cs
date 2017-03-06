@@ -1,11 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using HospitalManager.DAL.EF;
-using HospitalManager.DAL.Entities;
 using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Identity;
 using HospitalManager.DAL.Interfaces;
-using HospitalManager.DAL.Repositories;
 using HospitalManager.DAL.Repositories.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -21,10 +19,6 @@ namespace HospitalManager.DAL.UnitsOfWork
 
         private IClientManager _clientManager;
 
-        private IRepository<Temp> _tempRepository;
-
-        private IRepository<Example> _exampleRepository;
-
         private bool _disposed;
 
         public UnitOfWork(string databaseConnectionString)
@@ -35,10 +29,6 @@ namespace HospitalManager.DAL.UnitsOfWork
             _roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_databaseContext));
             _clientManager = new ClientManager(_databaseContext);
         }
-
-        public IRepository<Example> Examples => _exampleRepository ?? (_exampleRepository = new CommonRepository<Example>(_databaseContext));
-
-		public IRepository<Temp> Temps => _tempRepository ?? (_tempRepository = new CommonRepository<Temp>(_databaseContext));
 
         public ApplicationUserManager UserManager => _userManager ?? (_userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_databaseContext)));
 

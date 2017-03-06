@@ -221,7 +221,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\LogActionFilterAttribute.cs" />
     <Compile Include="Filters\LogIpFilterAttribute.cs" />
@@ -235,8 +234,6 @@
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
-    <Compile Include="ViewModels\TempViewModel.cs" />
-    <Compile Include="ViewModels\ExampleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\styles.css" />
@@ -281,14 +278,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Example\GetAll.cshtml" />
-    <Content Include="Views\Example\Create.cshtml" />
-    <Content Include="Views\Example\Edit.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\LoginPartial.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

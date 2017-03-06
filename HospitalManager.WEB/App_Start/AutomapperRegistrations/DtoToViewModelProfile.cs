@@ -8,10 +8,6 @@ namespace HospitalManager.WEB.AutomapperRegistrations
     {
         public DtoToViewModelProfile()
         {
-            CreateMap<ExampleDto, ExampleViewModel>();
-
-			CreateMap<TempDto, TempViewModel>();
-
         }
     }
 }

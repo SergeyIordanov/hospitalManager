@@ -29,7 +29,7 @@ namespace HospitalManager.WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
-            await SetInitialDataAsync();
+            //await SetInitialDataAsync();
 
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace HospitalManager.WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            await SetInitialDataAsync();
+            //await SetInitialDataAsync();
 
             if (ModelState.IsValid)
             {
@@ -156,7 +156,7 @@ namespace HospitalManager.WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model)
         {
-            await SetInitialDataAsync();
+            //await SetInitialDataAsync();
 
             if (User.Identity.IsAuthenticated)
             {

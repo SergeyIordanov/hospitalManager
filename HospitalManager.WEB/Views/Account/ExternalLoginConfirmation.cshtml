@@ -29,14 +29,17 @@
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "red-text" })
             </div>
             <div class="input-field">
-                @Html.LabelFor(m => m.Gender)
-                @Html.RadioButtonFor(m => m.Gender, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Gender)
-            </div>
-            <div class="input-field">
                 @Html.LabelFor(m => m.Age)
                 @Html.EditorFor(m => m.Age, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Age, "")
+            </div>
+            <div class="input-field">
+                <input name="Gender" type="radio" id="male" />
+                <label for="male">Male</label>
+
+                <input name="Gender" type="radio" id="female" />
+                <label for="female">Female</label>
+                @Html.ValidationMessageFor(m => m.Gender)
             </div>
 
             <div class="input-field">

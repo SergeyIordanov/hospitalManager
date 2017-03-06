@@ -30,8 +30,6 @@ namespace HospitalManager.WEB.DependencyResolvers
         private void AddBindings()
         {
             _kernel.Bind<IUserService>().To<UserService>().WithConstructorArgument("HospitalDatabase");
-            _kernel.Bind<IExampleService>().To<ExampleService>();
-			_kernel.Bind<ITempService>().To<TempService>();
 
             _kernel.Bind<ILogger>().ToMethod(p =>
             {

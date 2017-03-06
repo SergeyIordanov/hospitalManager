@@ -80,8 +80,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\ITempService.cs" />
     <Compile Include="Interfaces\IExampleService.cs" />
-    <Compile Include="Services\ExampleService.cs" />
-    <Compile Include="Services\TempService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup />

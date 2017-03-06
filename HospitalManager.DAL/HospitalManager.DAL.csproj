@@ -58,18 +58,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EF\DatabaseContext.cs" />
-    <Compile Include="EF\StoreDbInitializer.cs" />
     <Compile Include="Entities\Identity\ApplicationRole.cs" />
     <Compile Include="Entities\Identity\ApplicationUser.cs" />
     <Compile Include="Entities\Identity\ClientProfile.cs" />
     <Compile Include="Entities\BaseType.cs" />
-    <Compile Include="Entities\Temp.cs" />
-    <Compile Include="Entities\Example.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserMangager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Migrations\201703060809451_Initial.cs" />
+    <Compile Include="Migrations\201703060809451_Initial.Designer.cs">
+      <DependentUpon>201703060809451_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CommonRepository.cs" />
     <Compile Include="Repositories\Identity\ClientManager.cs" />
@@ -88,6 +90,11 @@
       <Project>{4973AA32-497A-4608-9E06-BE30D85F356C}</Project>
       <Name>HospitalManager.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703060809451_Initial.resx">
+      <DependentUpon>201703060809451_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
