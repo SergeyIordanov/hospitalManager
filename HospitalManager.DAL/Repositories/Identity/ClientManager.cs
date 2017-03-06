@@ -22,5 +22,12 @@ namespace HospitalManager.DAL.Repositories.Identity
         {
             Database.Dispose();
         }
+
+        public ClientProfile Get(string id)
+        {
+            var clientProfile = Database.ClientProfiles.Find(id);
+
+            return clientProfile;
+        }
     }
 }

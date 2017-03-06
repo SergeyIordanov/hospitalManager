@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using HospitalManager.BLL.DTO;
 using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
@@ -88,6 +89,20 @@ namespace HospitalManager.BLL.Services
             }
 
             await RegisterAsync(adminDto);
+        }
+
+        public ClientProfileDto GetClientProfile(string userId)
+        {
+            var clientProfile = _database.ClientManager.Get(userId);
+
+            if (clientProfile == null)
+            {
+                throw new EntityNotFoundException($"ClientProfile with such id cannot be found. Id: {userId}", "Payment");
+            }
+
+            var clientProfileDto = Mapper.Map<ClientProfileDto>(clientProfile);
+
+            return clientProfileDto;
         }
 
         public void Dispose()

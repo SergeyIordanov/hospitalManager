@@ -62,6 +62,7 @@
     <Compile Include="Entities\Identity\ApplicationUser.cs" />
     <Compile Include="Entities\Identity\ClientProfile.cs" />
     <Compile Include="Entities\BaseType.cs" />
+    <Compile Include="Entities\Payment.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserMangager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
@@ -70,6 +71,30 @@
     <Compile Include="Migrations\201703060809451_Initial.cs" />
     <Compile Include="Migrations\201703060809451_Initial.Designer.cs">
       <DependentUpon>201703060809451_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061015318_AddPayments.cs" />
+    <Compile Include="Migrations\201703061015318_AddPayments.Designer.cs">
+      <DependentUpon>201703061015318_AddPayments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061019197_RemoveFluentApi.cs" />
+    <Compile Include="Migrations\201703061019197_RemoveFluentApi.Designer.cs">
+      <DependentUpon>201703061019197_RemoveFluentApi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061034148_ReturnFluentApi.cs" />
+    <Compile Include="Migrations\201703061034148_ReturnFluentApi.Designer.cs">
+      <DependentUpon>201703061034148_ReturnFluentApi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061252083_RemovePluralTableNames.cs" />
+    <Compile Include="Migrations\201703061252083_RemovePluralTableNames.Designer.cs">
+      <DependentUpon>201703061252083_RemovePluralTableNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061254177_ReturnPluralTableNames.cs" />
+    <Compile Include="Migrations\201703061254177_ReturnPluralTableNames.Designer.cs">
+      <DependentUpon>201703061254177_ReturnPluralTableNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703061300456_UpdatePayments.cs" />
+    <Compile Include="Migrations\201703061300456_UpdatePayments.Designer.cs">
+      <DependentUpon>201703061300456_UpdatePayments.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,7 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exceptions\" />
-    <Folder Include="Infrastructure\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HospitalManager.Core\HospitalManager.Core.csproj">
@@ -94,6 +118,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703060809451_Initial.resx">
       <DependentUpon>201703060809451_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061015318_AddPayments.resx">
+      <DependentUpon>201703061015318_AddPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061019197_RemoveFluentApi.resx">
+      <DependentUpon>201703061019197_RemoveFluentApi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061034148_ReturnFluentApi.resx">
+      <DependentUpon>201703061034148_ReturnFluentApi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061252083_RemovePluralTableNames.resx">
+      <DependentUpon>201703061252083_RemovePluralTableNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061254177_ReturnPluralTableNames.resx">
+      <DependentUpon>201703061254177_ReturnPluralTableNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703061300456_UpdatePayments.resx">
+      <DependentUpon>201703061300456_UpdatePayments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

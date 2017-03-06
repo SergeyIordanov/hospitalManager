@@ -1,5 +1,9 @@
+using HospitalManager.DAL.EF;
+using HospitalManager.DAL.Entities;
 using Ninject.Modules;
 using HospitalManager.DAL.Interfaces;
+using HospitalManager.DAL.Repositories;
+using HospitalManager.DAL.Repositories.Identity;
 using HospitalManager.DAL.UnitsOfWork;
 
 namespace HospitalManager.BLL.Infrastructure
@@ -15,7 +19,10 @@ namespace HospitalManager.BLL.Infrastructure
 
         public override void Load()
         {
-            Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument(_connectionString);
+            Bind<IUnitOfWork>().To<UnitOfWork>();
+            Bind<DatabaseContext>().To<DatabaseContext>().WithConstructorArgument(_connectionString);
+            Bind<IRepository<Payment>>().To<CommonRepository<Payment>>();
+            Bind<IClientManager>().To<ClientManager>();
         }
     }
 }

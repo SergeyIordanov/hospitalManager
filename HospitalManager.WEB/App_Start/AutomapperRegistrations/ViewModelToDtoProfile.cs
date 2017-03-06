@@ -8,6 +8,8 @@ namespace HospitalManager.WEB.AutomapperRegistrations
     {
         public ViewModelToDtoProfile()
         {
+            CreateMap<ClientProfileViewModel, ClientProfileDto>();
+            CreateMap<PaymentViewModel, PaymentDto>();
         }
     }
 }

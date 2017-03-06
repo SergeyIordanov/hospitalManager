@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using HospitalManager.DAL.EF;
+using HospitalManager.DAL.Entities;
 using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Identity;
 using HospitalManager.DAL.Interfaces;
@@ -19,15 +20,21 @@ namespace HospitalManager.DAL.UnitsOfWork
 
         private IClientManager _clientManager;
 
+        private readonly Lazy<IRepository<Payment>> _paymentRepository;
+
         private bool _disposed;
 
-        public UnitOfWork(string databaseConnectionString)
+        public UnitOfWork(
+            DatabaseContext context,
+            IClientManager clientManager,
+            IRepository<Payment> paymentRepository)
         {
-            _databaseContext = new DatabaseContext(databaseConnectionString);
+            _databaseContext = context;
 
             _userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_databaseContext));
             _roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_databaseContext));
-            _clientManager = new ClientManager(_databaseContext);
+            _clientManager = clientManager;
+            _paymentRepository = new Lazy<IRepository<Payment>>(() => paymentRepository);
         }
 
         public ApplicationUserManager UserManager => _userManager ?? (_userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_databaseContext)));
@@ -35,6 +42,8 @@ namespace HospitalManager.DAL.UnitsOfWork
         public IClientManager ClientManager => _clientManager ?? (_clientManager = new ClientManager(_databaseContext));
 
         public ApplicationRoleManager RoleManager => _roleManager ?? (_roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_databaseContext)));
+
+        public IRepository<Payment> Payments => _paymentRepository.Value;
 
         public async Task SaveAsync()
         {
