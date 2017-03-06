@@ -83,6 +83,12 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalManager.Core\HospitalManager.Core.csproj">
+      <Project>{4973AA32-497A-4608-9E06-BE30D85F356C}</Project>
+      <Name>HospitalManager.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

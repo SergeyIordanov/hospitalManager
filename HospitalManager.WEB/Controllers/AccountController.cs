@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using HospitalManager.BLL.DTO;
 using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
+using HospitalManager.Core.Enums;
 using HospitalManager.WEB.Infrastructure.Identity;
 using HospitalManager.WEB.ViewModels.Account;
 using Microsoft.AspNet.Identity.Owin;
@@ -83,6 +84,8 @@ namespace HospitalManager.WEB.Controllers
                         Password = model.Password,
                         Address = model.Address,
                         Name = model.Name,
+                        Gender = model.Gender,
+                        Age = model.Age,
                         Role = "user"
                     };
 
@@ -173,6 +176,9 @@ namespace HospitalManager.WEB.Controllers
                 {
                     Name = model.Email,
                     Email = model.Email,
+                    Address = model.Address,
+                    Gender = model.Gender,
+                    Age = model.Age,
                     Role = "user"
                 };
 
@@ -201,8 +207,10 @@ namespace HospitalManager.WEB.Controllers
                 Email = "admin@admin.com",
                 UserName = "admin@admin.com",
                 Password = "Admin_1234",
-                Name = "Alex Admin",
+                Name = "Admin",
                 Address = "Naukova ave., 2",
+                Gender = Gender.Male,
+                Age = 20,
                 Role = "admin"
             };
 

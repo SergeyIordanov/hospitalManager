@@ -90,6 +90,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HospitalManager.Core\HospitalManager.Core.csproj">
+      <Project>{4973AA32-497A-4608-9E06-BE30D85F356C}</Project>
+      <Name>HospitalManager.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HospitalManager.DAL\HospitalManager.DAL.csproj">
       <Project>{0B895E67-25F9-48BC-81C3-2D57ECA3B87C}</Project>
       <Name>HospitalManager.DAL</Name>
