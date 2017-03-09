@@ -42,8 +42,9 @@ namespace HospitalManager.WEB.Controllers
         }
 
         [HttpPost]
-        public ActionResult Pay(PaymentResultViewModel paymentResult)
+        public ActionResult Confirm()
         {
+            var paymentResult = GetPaymentResult();
             PaymentDto existingPayment;
 
             try
@@ -71,6 +72,26 @@ namespace HospitalManager.WEB.Controllers
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        private PaymentResultViewModel GetPaymentResult()
+        {
+            var paymentFromForm = Request.Form.GetValues("payment")?.FirstOrDefault();
+            var signature = Request.Form.GetValues("signature")?.FirstOrDefault();
+
+            var myJson1 = paymentFromForm?.Replace("=", ":'");
+            var myJson2 = myJson1?.Replace("&", "',");
+            var myJson = "{" + myJson2 + "'}";
+
+            var payment = JsonConvert.DeserializeObject<PaymentViewModel>(myJson);
+
+            var result = new PaymentResultViewModel
+            {
+                Payment = payment,
+                Signature = signature
+            };
+
+            return result;
         }
     }
 }
