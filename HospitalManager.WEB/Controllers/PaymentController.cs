@@ -44,24 +44,24 @@ namespace HospitalManager.WEB.Controllers
         [HttpPost]
         public ActionResult Confirm()
         {
-            var paymentResult = GetPaymentResult();
+            var payment = GetPaymentResult();
             PaymentDto existingPayment;
 
             try
             {
                 existingPayment = _paymentService
-                    .GetBySignature(paymentResult?.Signature);
+                    .GetBySignature(payment?.Signature);
             }
             catch (EntityException)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            if (paymentResult != null)
+            if (payment != null)
             {
-                existingPayment.Sum = paymentResult.Payment.Sum;
-                existingPayment.Currency = paymentResult.Payment.Currency;
-                existingPayment.Details = paymentResult.Payment.Details;
+                existingPayment.Sum = payment.Sum;
+                existingPayment.Currency = payment.Currency;
+                existingPayment.Details = payment.Details;
                 existingPayment.Status = PaymentStatus.Confirmed;
 
                 _paymentService.Update(existingPayment);
@@ -74,10 +74,9 @@ namespace HospitalManager.WEB.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        private PaymentResultViewModel GetPaymentResult()
+        private PaymentViewModel GetPaymentResult()
         {
             var paymentFromForm = Request.Form.GetValues("payment")?.FirstOrDefault();
-            var signature = Request.Form.GetValues("signature")?.FirstOrDefault();
 
             var myJson1 = paymentFromForm?.Replace("=", ":'");
             var myJson2 = myJson1?.Replace("&", "',");
@@ -85,13 +84,7 @@ namespace HospitalManager.WEB.Controllers
 
             var payment = JsonConvert.DeserializeObject<PaymentViewModel>(myJson);
 
-            var result = new PaymentResultViewModel
-            {
-                Payment = payment,
-                Signature = signature
-            };
-
-            return result;
+            return payment;
         }
     }
 }
