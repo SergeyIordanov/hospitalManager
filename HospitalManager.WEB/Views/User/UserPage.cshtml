@@ -21,6 +21,7 @@
                 <th>#</th>
                 <th>Sum</th>
                 <th>Currency</th>
+                <th>Status</th>
                 <th>Details</th>
             </tr>
 
@@ -30,6 +31,7 @@
                     <td>@payment.Id</td>
                     <td>@payment.Sum</td>
                     <td>@payment.Currency</td>
+                    <td>@payment.Status.ToString()</td>
                     <td>@payment.Details</td>
                 </tr>
             }

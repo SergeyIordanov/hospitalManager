@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Web.Mvc;
 using HospitalManager.BLL.DTO;
+using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
 using HospitalManager.Core.Enums;
+using HospitalManager.WEB.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace HospitalManager.WEB.Controllers
@@ -34,6 +37,38 @@ namespace HospitalManager.WEB.Controllers
             _paymentService.Create(payment);
 
             return View(model: payment.Signature);
+        }
+
+        [HttpPost]
+        public ActionResult Pay(PaymentResultViewModel paymentResult)
+        {
+            PaymentDto existingPayment;
+
+            try
+            {
+                existingPayment = _paymentService
+                    .GetBySignature(paymentResult?.Signature);
+            }
+            catch (EntityException)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            if (paymentResult != null)
+            {
+                existingPayment.Sum = paymentResult.Payment.Sum;
+                existingPayment.Currency = paymentResult.Payment.Currency;
+                existingPayment.Details = paymentResult.Payment.Details;
+                existingPayment.Status = PaymentStatus.Confirmed;
+
+                _paymentService.Update(existingPayment);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

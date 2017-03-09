@@ -4,6 +4,7 @@ using AutoMapper;
 using HospitalManager.BLL.DTO;
 using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
+using HospitalManager.Core.Enums;
 using HospitalManager.DAL.Entities;
 using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Interfaces;
@@ -19,22 +20,55 @@ namespace HospitalManager.BLL.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<PaymentDto> Get()
+        public IEnumerable<PaymentDto> Get(bool includeInitialized = true)
         {
-            var payments = _unitOfWork.Payments.GetAll().ToList();
-            var paymentDtos = Mapper.Map<IEnumerable<PaymentDto>>(payments);
+            var paymentsQuery = _unitOfWork.Payments.GetAll();
+
+            if (!includeInitialized)
+            {
+                paymentsQuery = paymentsQuery
+                    .Where(payment => payment.Status != PaymentStatus.Initialized);
+            }
+
+            var paymentsList = paymentsQuery.ToList();
+            var paymentDtos = Mapper.Map<IEnumerable<PaymentDto>>(paymentsList);
 
             return paymentDtos;
         }
 
-        public IEnumerable<PaymentDto> Get(string clientProfileId)
+        public IEnumerable<PaymentDto> Get(string clientProfileId, bool includeInitialized = true)
         {
-            var payments = _unitOfWork.Payments
-                .Find(payment => payment.ClientProfile.Id.Equals(clientProfileId))
-                .ToList();
-            var paymentDtos = Mapper.Map<IEnumerable<PaymentDto>>(payments);
+            var paymentsQuery = _unitOfWork.Payments
+                .Find(payment => payment.ClientProfile.Id.Equals(clientProfileId));
+
+            if (!includeInitialized)
+            {
+                paymentsQuery = paymentsQuery
+                    .Where(payment => payment.Status != PaymentStatus.Initialized);
+            }
+
+            var paymentsList = paymentsQuery.ToList();
+            var paymentDtos = Mapper.Map<IEnumerable<PaymentDto>>(paymentsList);
 
             return paymentDtos;
+        }
+
+        public PaymentDto GetBySignature(string signature)
+        {
+            var payment = _unitOfWork.Payments
+                .Find(p => p.Signature.Equals(signature))
+                .FirstOrDefault();
+
+            if (payment == null)
+            {
+                throw new EntityNotFoundException(
+                    $"Cannot find payment with such signature. Signature: {signature}", 
+                    "Payment");
+            }
+
+            var paymentDto = Mapper.Map<PaymentDto>(payment);
+
+            return paymentDto;
         }
 
         public PaymentDto Get(int id)

@@ -5,9 +5,11 @@ namespace HospitalManager.BLL.Interfaces
 {
     public interface IPaymentService
     {
-        IEnumerable<PaymentDto> Get();
+        IEnumerable<PaymentDto> Get(bool includeInitialized = true);
 
-        IEnumerable<PaymentDto> Get(string clientProfileId);
+        IEnumerable<PaymentDto> Get(string clientProfileId, bool includeInitialized = true);
+
+        PaymentDto GetBySignature(string signature);
 
         PaymentDto Get(int id);
 

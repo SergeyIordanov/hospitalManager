@@ -37,7 +37,7 @@ namespace HospitalManager.WEB.Controllers
             }
 
             var clientProfileViewModel = Mapper.Map<ClientProfileViewModel>(clientProfileDto);
-            var paymentDtos = _paymentService.Get(userId);
+            var paymentDtos = _paymentService.Get(userId, false);
             var paymentViewModels = Mapper.Map<IEnumerable<PaymentViewModel>>(paymentDtos);
 
             var userPageModel = new UserPageViewModel
