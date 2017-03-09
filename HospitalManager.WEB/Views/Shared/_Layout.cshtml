@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using Microsoft.Owin.Security
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -21,10 +22,10 @@
                 <a href="@Url.RouteUrl(new {controller = "Home", action = "Index"})" class="brand-logo">
                     <span class="grey-text">HospitalManager</span>
                 </a>
-                
                 <ul class="right hide-on-med-and-down menu-link">
                     @if (!User.Identity.IsAuthenticated)
                     {
+                        
                         <li>
                             @Html.ActionLink("Register", "Register", "Account")
                         </li>
@@ -32,12 +33,27 @@
                         <li>
                             @Html.ActionLink("Login", "Login", "Account")
                         </li>
+                        <li>
+                            @{ var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList(); }
+
+                            @using (Html.BeginForm("ExternalLogin", "Account"))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit" class="btn-social" id="@loginProviders.First().AuthenticationType"
+                                        name="provider" value="@loginProviders.First().AuthenticationType"
+                                        title="Log in using your @loginProviders.First().Caption" account>
+                                    <img src="~/Content/Images/facebook.png" width="25" height="25"/>
+                                </button>
+
+                            }
+                        </li>
                     }
                     else
                     {
                         <span class="grey-text">Hello, @User.Identity.Name</span>
                         <li class="right hide-on-med-and-down">
-                             @Html.ActionLink("Logout", "Logout", "Account")
+                            @Html.ActionLink("Logout", "Logout", "Account")
                         </li>
                     }
                 </ul>
@@ -45,11 +61,11 @@
         </nav>
     </div>
 
-<main>
-    <div class="container">
-        @RenderBody()
-    </div>
-</main>
+    <main>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
 
     <footer class="page-footer white">
         <div class="container">

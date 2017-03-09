@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -105,6 +106,35 @@ namespace HospitalManager.BLL.Services
             return clientProfileDto;
         }
 
+        public IEnumerable<ClientProfileDto> GetAllClientProfiles()
+        {
+            var clientProfiles = _database.ClientManager.GetAll().ToList();
+            var clientProfilesDto = Mapper.Map<List<ClientProfileDto>>(clientProfiles);
+            var roles = _database.RoleManager.Roles.ToList();
+
+            foreach (var profile in clientProfilesDto)
+            {
+                profile.Roles = roles.Where(x => profile.Roles.Contains(x.Id)).Select(x => x.Name).ToList();
+            }
+
+            return clientProfilesDto;
+        }
+
+        public async Task ChangeUserRole(string userId, string role)
+        {
+            var user = await _database.UserManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new AuthException("User", "There is no such user.");
+            }
+
+            await _database.UserManager.RemoveFromRoleAsync(userId, "user");
+            await _database.UserManager.RemoveFromRoleAsync(userId, "admin");
+
+            await _database.UserManager.AddToRoleAsync(userId, role);
+        }
+
         public void Dispose()
         {
             _database.Dispose();
@@ -116,7 +146,9 @@ namespace HospitalManager.BLL.Services
             {
                 Id = user.Id,
                 Address = userDto.Address,
-                Name = userDto.Name
+                Name = userDto.Name,
+                Gender = userDto.Gender,
+                Age = userDto.Age
             };
 
             _database.ClientManager.Create(clientProfile);

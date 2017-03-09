@@ -1,4 +1,5 @@
-﻿@model HospitalManager.WEB.ViewModels.Account.ExternalLoginConfirmationViewModel
+﻿@using HospitalManager.Core.Enums
+@model HospitalManager.WEB.ViewModels.Account.ExternalLoginConfirmationViewModel
 @{
     ViewBag.Title = "ExternalLoginConfirmation";
 }
@@ -14,7 +15,7 @@
             <hr />
             @Html.ValidationSummary(true, "")
             <p>
-                You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
+                You've successfully authenticated with facebook.<strong>@ViewBag.LoginProvider</strong>.
                 Please enter a user name for this site below and click the Register button to finish
                 logging in.
             </p>
@@ -34,10 +35,10 @@
                 @Html.ValidationMessageFor(m => m.Age, "")
             </div>
             <div class="input-field">
-                <input name="Gender" type="radio" id="male" />
+                <input name="Gender" type="radio" id="male" value="@Gender.Male" />
                 <label for="male">Male</label>
 
-                <input name="Gender" type="radio" id="female" />
+                <input name="Gender" type="radio" id="female" value="@Gender.Female" />
                 <label for="female">Female</label>
                 @Html.ValidationMessageFor(m => m.Gender)
             </div>

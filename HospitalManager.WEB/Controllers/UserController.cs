@@ -48,5 +48,24 @@ namespace HospitalManager.WEB.Controllers
 
             return View(userPageModel);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult ChangeRole(string userId, string role)
+        {
+            _userService.ChangeUserRole(userId, role);
+
+            return RedirectToAction("AdminPage");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public ActionResult AdminPage()
+        {
+            var clientProfileDtos = _userService.GetAllClientProfiles();
+            var clientProfileViewModels = Mapper.Map<List<ClientProfileViewModel>>(clientProfileDtos);
+
+            return View(clientProfileViewModels);
+        }
     }
 }

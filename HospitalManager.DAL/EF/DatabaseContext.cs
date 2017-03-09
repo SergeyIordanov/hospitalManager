@@ -27,11 +27,13 @@ namespace HospitalManager.DAL.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<DatabaseContext>(null);
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<ApplicationUser>().HasMany(p => p.Roles).WithRequired().HasForeignKey(p => p.UserId);
+            modelBuilder.Entity<ApplicationRole>().HasMany(p => p.Users).WithRequired().HasForeignKey(p => p.RoleId);
 
             modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
-            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { UserId = r.UserId, RoleId = r.RoleId });
 
             modelBuilder.Entity<ClientProfile>()
                 .HasMany(profile => profile.Payments)
