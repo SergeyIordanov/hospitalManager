@@ -237,7 +237,6 @@
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ClientProfileViewModel.cs" />
-    <Compile Include="ViewModels\PaymentResultViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="ViewModels\UserPageViewModel.cs" />
   </ItemGroup>
