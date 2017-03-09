@@ -10,9 +10,15 @@ namespace HospitalManager.BLL.Interfaces
     public interface IUserService : IDisposable
     {
         Task RegisterAsync(UserDto userDto);
+
         Task ExternalRegisterAsync(UserDto userDto, UserLoginInfo info);
+
         Task<ClaimsIdentity> SignInAsync(UserDto userDto);
+
         Task<ClaimsIdentity> ExternalSignInAsync(UserLoginInfo loginInfo);
+
         Task SetInitialDataAsync(UserDto adminDto, IEnumerable<string> roles);
+
+        ClientProfileDto GetClientProfile(string userId);
     }
 }

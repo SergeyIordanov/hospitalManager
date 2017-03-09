@@ -13,6 +13,8 @@ namespace HospitalManager.DAL.Interfaces
 
         ApplicationRoleManager RoleManager { get; }
 
+        IRepository<Payment> Payments { get; }
+
         void Save();
 
         Task SaveAsync();

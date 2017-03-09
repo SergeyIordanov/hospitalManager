@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using HospitalManager.Core.Enums;
 
 namespace HospitalManager.DAL.Entities.Identity
 {
+    [Table("ClientProfiles")]
     public class ClientProfile
     {
         [Key]
@@ -19,5 +21,7 @@ namespace HospitalManager.DAL.Entities.Identity
         public Gender Gender { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

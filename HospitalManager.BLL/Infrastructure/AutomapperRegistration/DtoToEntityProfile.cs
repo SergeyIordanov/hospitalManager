@@ -1,4 +1,7 @@
 using AutoMapper;
+using HospitalManager.BLL.DTO;
+using HospitalManager.DAL.Entities;
+using HospitalManager.DAL.Entities.Identity;
 
 namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
 {
@@ -6,6 +9,8 @@ namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
     {
         public DtoToEntityProfile()
         {
+            CreateMap<ClientProfileDto, ClientProfile>();
+            CreateMap<PaymentDto, Payment>();
         }
     }
 }

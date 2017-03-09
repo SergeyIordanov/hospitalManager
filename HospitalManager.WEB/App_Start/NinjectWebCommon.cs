@@ -42,7 +42,7 @@ namespace HospitalManager.WEB
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            var modules = new INinjectModule[] { new ServiceModule("ExampleDatabase") };
+            var modules = new INinjectModule[] { new ServiceModule("HospitalDatabase") };
 
             kernel.Load(modules);
 
@@ -68,6 +68,6 @@ namespace HospitalManager.WEB
         private static void RegisterServices(IKernel kernel)
         {
             System.Web.Mvc.DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
-        }        
+        }
     }
 }

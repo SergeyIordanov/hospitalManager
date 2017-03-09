@@ -72,7 +72,7 @@ namespace HospitalManager.WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            //await SetInitialDataAsync();
+            // await SetInitialDataAsync();
 
             if (ModelState.IsValid)
             {

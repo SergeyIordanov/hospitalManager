@@ -1,0 +1,41 @@
+﻿@model HospitalManager.WEB.ViewModels.UserPageViewModel
+@{
+    ViewBag.Title = "User page";
+}
+
+<div class="row">
+    <div class="col s12 m6">
+        <p class="flow-text center">Client profile</p>
+        <hr/>
+        <p>Name: @Model.ClientProfile.Name</p>
+        <p>Email: @Model.ClientProfile.Email</p>
+        <p>Address: @Model.ClientProfile.Address</p>
+        <p>Age: @Model.ClientProfile.Age</p>
+        <p>Gender: @Model.ClientProfile.Gender.ToString()</p>
+    </div>
+    <div class="col s12 m6">
+        <p class="flow-text center">Payments</p>
+        <hr />
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Sum</th>
+                <th>Currency</th>
+                <th>Status</th>
+                <th>Details</th>
+            </tr>
+
+            @foreach (var payment in Model.Payments)
+            {
+                <tr>
+                    <td>@payment.Id</td>
+                    <td>@payment.Sum</td>
+                    <td>@payment.Currency</td>
+                    <td>@payment.Status.ToString()</td>
+                    <td>@payment.Details</td>
+                </tr>
+            }
+        </table>
+        <a class="waves-effect waves-light btn center" href="@Url.Action("Pay", "Payment")">Add payment</a>
+    </div>
+</div>

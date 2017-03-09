@@ -5,6 +5,8 @@ namespace HospitalManager.DAL.Interfaces
 {
     public interface IClientManager : IDisposable
     {
+        ClientProfile Get(string id);
+
         void Create(ClientProfile item);
     }
 }

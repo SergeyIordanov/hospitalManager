@@ -65,21 +65,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\TempDto.cs" />
-    <Compile Include="DTO\ExampleDto.cs" />
+    <Compile Include="DTO\ClientProfileDto.cs" />
+    <Compile Include="DTO\PaymentDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
     <Compile Include="Exceptions\AuthException.cs" />
     <Compile Include="Exceptions\EntityException.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\UniqueValueAlreadyExistsException.cs" />
-    <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Infrastructure\AutomapperRegistration\DtoToEntityProfile.cs" />
     <Compile Include="Infrastructure\AutomapperRegistration\EntityToDtoProfile.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
+    <Compile Include="Interfaces\IPaymentService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\ITempService.cs" />
-    <Compile Include="Interfaces\IExampleService.cs" />
+    <Compile Include="Services\PaymentService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup />
