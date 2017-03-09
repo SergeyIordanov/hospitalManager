@@ -5,6 +5,7 @@ using HospitalManager.DAL.Entities;
 using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Identity;
 using HospitalManager.DAL.Interfaces;
+using HospitalManager.DAL.Repositories;
 using HospitalManager.DAL.Repositories.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -24,17 +25,14 @@ namespace HospitalManager.DAL.UnitsOfWork
 
         private bool _disposed;
 
-        public UnitOfWork(
-            DatabaseContext context,
-            IClientManager clientManager,
-            IRepository<Payment> paymentRepository)
+        public UnitOfWork(string connectionString)
         {
-            _databaseContext = context;
+            _databaseContext = new DatabaseContext(connectionString);
 
             _userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_databaseContext));
             _roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_databaseContext));
-            _clientManager = clientManager;
-            _paymentRepository = new Lazy<IRepository<Payment>>(() => paymentRepository);
+            _clientManager = new ClientManager(_databaseContext);
+            _paymentRepository = new Lazy<IRepository<Payment>>(() => new CommonRepository<Payment>(_databaseContext));
         }
 
         public ApplicationUserManager UserManager => _userManager ?? (_userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_databaseContext)));

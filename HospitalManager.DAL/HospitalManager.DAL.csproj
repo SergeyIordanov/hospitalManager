@@ -96,6 +96,14 @@
     <Compile Include="Migrations\201703061300456_UpdatePayments.Designer.cs">
       <DependentUpon>201703061300456_UpdatePayments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703080905179_PaymentForeignKeyClientProfile.cs" />
+    <Compile Include="Migrations\201703080905179_PaymentForeignKeyClientProfile.Designer.cs">
+      <DependentUpon>201703080905179_PaymentForeignKeyClientProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703080925123_RemovePaymentForeignKeyClientProfile.cs" />
+    <Compile Include="Migrations\201703080925123_RemovePaymentForeignKeyClientProfile.Designer.cs">
+      <DependentUpon>201703080925123_RemovePaymentForeignKeyClientProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CommonRepository.cs" />
@@ -136,6 +144,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703061300456_UpdatePayments.resx">
       <DependentUpon>201703061300456_UpdatePayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703080905179_PaymentForeignKeyClientProfile.resx">
+      <DependentUpon>201703080905179_PaymentForeignKeyClientProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703080925123_RemovePaymentForeignKeyClientProfile.resx">
+      <DependentUpon>201703080925123_RemovePaymentForeignKeyClientProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

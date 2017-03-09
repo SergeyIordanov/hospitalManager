@@ -33,7 +33,7 @@ namespace HospitalManager.WEB.Controllers
             }
             catch (EntityException ex)
             {
-                return View("~/Views/Shared/Error.cshtml", ex.Message);
+                return View("Error", model: ex.Message);
             }
 
             var clientProfileViewModel = Mapper.Map<ClientProfileViewModel>(clientProfileDto);

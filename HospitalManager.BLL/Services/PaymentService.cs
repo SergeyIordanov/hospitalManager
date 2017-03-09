@@ -5,6 +5,7 @@ using HospitalManager.BLL.DTO;
 using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
 using HospitalManager.DAL.Entities;
+using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Interfaces;
 
 namespace HospitalManager.BLL.Services
@@ -54,6 +55,8 @@ namespace HospitalManager.BLL.Services
         {
             var payment = Mapper.Map<Payment>(paymentDto);
 
+            AssignClientProfile(payment);
+
             _unitOfWork.Payments.Create(payment);
             _unitOfWork.Save();
         }
@@ -70,6 +73,7 @@ namespace HospitalManager.BLL.Services
             }
 
             Mapper.Map(paymentDto, existingPayment);
+            AssignClientProfile(existingPayment);
 
             _unitOfWork.Payments.Update(existingPayment);
             _unitOfWork.Save();
@@ -88,6 +92,26 @@ namespace HospitalManager.BLL.Services
 
             _unitOfWork.Payments.Delete(id);
             _unitOfWork.Save();
+        }
+
+        private void AssignClientProfile(Payment payment)
+        {
+            if (payment.ClientProfile == null)
+            {
+                return;
+            }
+
+            ClientProfile clientProfile =
+                _unitOfWork.ClientManager.Get(payment.ClientProfile.Id);
+
+            if (clientProfile == null)
+            {
+                throw new EntityNotFoundException(
+                    $"Cannot find client profile to create a new payment. Client profile id: {payment.ClientProfile.Id}",
+                    "ClientProfile");
+            }
+
+            payment.ClientProfile = clientProfile;
         }
     }
 }
