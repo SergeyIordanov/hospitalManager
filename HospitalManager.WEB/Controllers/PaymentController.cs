@@ -61,7 +61,7 @@ namespace HospitalManager.WEB.Controllers
             {
                 existingPayment.Sum = payment.Sum;
                 existingPayment.Currency = payment.Currency;
-                existingPayment.Details = payment.Details;
+                existingPayment.Details = payment.Details?.Replace("+", " ");
                 existingPayment.Status = PaymentStatus.Confirmed;
 
                 _paymentService.Update(existingPayment);
