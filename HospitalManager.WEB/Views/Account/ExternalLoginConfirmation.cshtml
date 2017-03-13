@@ -1,0 +1,57 @@
+﻿@using HospitalManager.Core.Enums
+@model HospitalManager.WEB.ViewModels.Account.ExternalLoginConfirmationViewModel
+@{
+    ViewBag.Title = "ExternalLoginConfirmation";
+}
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <div class="col s12 m6 push-m3">
+            <h4>Association Form</h4>
+            <hr />
+            @Html.ValidationSummary(true, "")
+            <p>
+                You've successfully authenticated with facebook.<strong>@ViewBag.LoginProvider</strong>.
+                Please enter a user name for this site below and click the Register button to finish
+                logging in.
+            </p>
+            <div class="input-field">
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "red-text" })
+                @Html.LabelFor(model => model.Email)
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="input-field">
+                @Html.LabelFor(model => model.Address)
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "red-text" })
+            </div>
+            <div class="input-field">
+                @Html.LabelFor(m => m.Age)
+                @Html.EditorFor(m => m.Age, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Age, "")
+            </div>
+            <div class="input-field">
+                <input name="Gender" type="radio" id="male" value="@Gender.Male" />
+                <label for="male">Male</label>
+
+                <input name="Gender" type="radio" id="female" value="@Gender.Female" />
+                <label for="female">Female</label>
+                @Html.ValidationMessageFor(m => m.Gender)
+            </div>
+
+            <div class="input-field">
+                <div class="center">
+                    <input type="submit" value="Register" class="btn" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

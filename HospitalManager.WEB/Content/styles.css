@@ -1,0 +1,22 @@
+/*Sticky footer options ->>*/
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  /* <<- Sticky footer options*/
+
+  nav ul.menu-link a {
+      color: grey !important;
+  }
+
+  .btn-social, .btn-social:hover, .btn-social:active{
+      background: rgba(255,255,255,0);
+      border: 0px solid white;
+      padding-top: 5px;
+  }

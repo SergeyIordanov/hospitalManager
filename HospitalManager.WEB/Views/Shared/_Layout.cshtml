@@ -1,0 +1,105 @@
+﻿@using Microsoft.Owin.Security
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="HospitalManager">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+    <title>HospitalManager</title>
+
+    <!-- Page styles -->
+    @Styles.Render("https://fonts.googleapis.com/icon?family=Material+Icons")
+    @Styles.Render("~/Content/materialize.min.css")
+    @Styles.Render("~/Content/styles.css")
+</head>
+
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper white">
+                <a href="@Url.RouteUrl(new {controller = "Home", action = "Index"})" class="brand-logo">
+                    <span class="grey-text">HospitalManager</span>
+                </a>
+                <ul class="right hide-on-med-and-down menu-link">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        
+                        <li>
+                            @Html.ActionLink("Register", "Register", "Account")
+                        </li>
+
+                        <li>
+                            @Html.ActionLink("Login", "Login", "Account")
+                        </li>
+                        <li>
+                            @{ var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList(); }
+
+                            @using (Html.BeginForm("ExternalLogin", "Account"))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit" class="btn-social" id="@loginProviders.First().AuthenticationType"
+                                        name="provider" value="@loginProviders.First().AuthenticationType"
+                                        title="Log in using your @loginProviders.First().Caption" account>
+                                    <img src="~/Content/Images/facebook.png" width="25" height="25"/>
+                                </button>
+
+                            }
+                        </li>
+                    }
+                    else
+                    {
+                        
+                        <span class="grey-text">Hello, @User.Identity.Name</span>
+                        if(User.IsInRole("doctor"))
+                        {
+                            <li class="right hide-on-med-and-down">
+                                @Html.ActionLink("Administartion", "AdminPage", "User")
+                            </li>
+                        }
+                        <li class="right hide-on-med-and-down">
+                            @Html.ActionLink("Logout", "Logout", "Account")
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="page-footer white">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="footer-text">HospitalManager</h5>
+                    <p class="footer-text">Simple HospitalManager</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="footer-text">Links</h5>
+                    <ul>
+                        <li><a class="footer-text" href="@Url.RouteUrl(new {controller = "Home", action = "Index"})">Home</a></li>
+                        <li><a class="footer-text" href="@Url.RouteUrl(new {controller = "User", action = "UserPage"})">My profile</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container grey-text text-darken-1">
+                © 2017 All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Page scripts -->
+    @Scripts.Render("~/Scripts/jquery-3.1.1.min.js")
+    @Scripts.Render("~/Scripts/materialize.min.js")
+</body>
+</html>
