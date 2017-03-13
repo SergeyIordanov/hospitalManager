@@ -17,7 +17,7 @@
                 <th>Action</th>
             </tr>
 
-            @foreach (var user in Model.Where(x=>x.Roles.Contains("user")))
+            @foreach (var user in Model.Where(x => x.Roles.Contains("patient")))
             {
                 <tr>
                     <td>@user.Name</td>
@@ -25,11 +25,11 @@
                     <td>@user.Gender</td>
                     <td>@user.Age</td>
                     <td>@user.Address</td>
-                    <td><a class="waves-effect waves-light btn center" href="@Url.Action("ChangeRole", "User", new {userId = user.Id, role = "admin"})">To Admin</a></td>
+                    <td><a class="waves-effect waves-light btn center" href="@Url.Action("ChangeRole", "User", new {userId = user.Id, role = "doctor"})">To Doctor</a></td>
                 </tr>
             }
         </table>
-        
+
     </div>
 </div>
 
@@ -47,7 +47,7 @@
                 <th>Action</th>
             </tr>
 
-            @foreach (var user in Model.Where(x => x.Roles.Contains("admin")))
+            @foreach (var user in Model.Where(x => x.Roles.Contains("doctor")))
             {
                 <tr>
                     <td>@user.Name</td>
@@ -55,11 +55,14 @@
                     <td>@user.Gender</td>
                     <td>@user.Age</td>
                     <td>@user.Address</td>
-                    <td><a class="waves-effect waves-light btn center" href="@Url.Action("ChangeRole", "User", new {userId = user.Id, role = "user"})">To User</a></td>
+                    @if (!user.Email.Equals("admin@admin.com"))
+                    {
+                        <td>
+                            <a class="waves-effect waves-light btn center" href="@Url.Action("ChangeRole", "User", new {userId = user.Id, role = "patient"})">To Patient</a>
+                        </td>
+                    }
                 </tr>
             }
         </table>
     </div>
 </div>
-
-
