@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using HospitalManager.BLL.DTO;
@@ -50,16 +51,16 @@ namespace HospitalManager.WEB.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
-        public ActionResult ChangeRole(string userId, string role)
+        [Authorize(Roles = "doctor")]
+        public async Task<ActionResult> ChangeRole(string userId, string role)
         {
-            _userService.ChangeUserRole(userId, role);
+            await _userService.ChangeUserRole(userId, role);
 
             return RedirectToAction("AdminPage");
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "doctor")]
         public ActionResult AdminPage()
         {
             var clientProfileDtos = _userService.GetAllClientProfiles();

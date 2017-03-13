@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -129,8 +128,15 @@ namespace HospitalManager.BLL.Services
                 throw new AuthException("User", "There is no such user.");
             }
 
-            await _database.UserManager.RemoveFromRoleAsync(userId, "user");
-            await _database.UserManager.RemoveFromRoleAsync(userId, "admin");
+            if(_database.UserManager.IsInRoleAsync(userId, "doctor").Result)
+            {
+                await _database.UserManager.RemoveFromRoleAsync(userId, "doctor");
+            }
+
+            if(_database.UserManager.IsInRoleAsync(userId, "patient").Result)
+            {
+                await _database.UserManager.RemoveFromRoleAsync(userId, "patient");
+            }
 
             await _database.UserManager.AddToRoleAsync(userId, role);
         }

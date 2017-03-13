@@ -51,7 +51,14 @@
                     }
                     else
                     {
+                        
                         <span class="grey-text">Hello, @User.Identity.Name</span>
+                        if(User.IsInRole("doctor"))
+                        {
+                            <li class="right hide-on-med-and-down">
+                                @Html.ActionLink("Administartion", "AdminPage", "User")
+                            </li>
+                        }
                         <li class="right hide-on-med-and-down">
                             @Html.ActionLink("Logout", "Logout", "Account")
                         </li>
