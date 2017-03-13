@@ -214,7 +214,7 @@ namespace HospitalManager.WEB.Controllers
                 Role = "admin"
             };
 
-            var roles = new List<string> {"user", "admin"};
+            var roles = new List<string> {"patient", "doctor", "admin"};
 
             await UserService.SetInitialDataAsync(admin, roles);
         }

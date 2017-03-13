@@ -1,6 +1,8 @@
-﻿using HospitalManager.DAL.EF;
+﻿using System.Linq;
+using HospitalManager.DAL.EF;
 using HospitalManager.DAL.Entities.Identity;
 using HospitalManager.DAL.Interfaces;
+using System.Data.Entity;
 
 namespace HospitalManager.DAL.Repositories.Identity
 {
@@ -28,6 +30,13 @@ namespace HospitalManager.DAL.Repositories.Identity
             var clientProfile = Database.ClientProfiles.Find(id);
 
             return clientProfile;
+        }
+
+        public IQueryable<ClientProfile> GetAll()
+        {
+            var clientProfiles = Database.ClientProfiles;
+            
+            return clientProfiles;
         }
     }
 }

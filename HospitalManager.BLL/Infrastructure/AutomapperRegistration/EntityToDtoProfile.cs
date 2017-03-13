@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using HospitalManager.BLL.DTO;
 using HospitalManager.DAL.Entities;
@@ -10,7 +11,9 @@ namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
         public EntityToDtoProfile()
         {
             CreateMap<ClientProfile, ClientProfileDto>()
-                .ForMember(dto => dto.Email, expression => expression.MapFrom(profile => profile.ApplicationUser.Email));
+                .ForMember(dto => dto.Email, expression => expression.MapFrom(profile => profile.ApplicationUser.Email))
+                .ForMember(dto => dto.Roles, expression => expression
+                    .MapFrom(profile => profile.ApplicationUser.Roles.Select(x =>x.RoleId)));
             CreateMap<Payment, PaymentDto>();
         }
     }
