@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using HospitalManager.DAL.Entities.Identity;
 
 namespace HospitalManager.DAL.Interfaces
@@ -8,5 +9,7 @@ namespace HospitalManager.DAL.Interfaces
         ClientProfile Get(string id);
 
         void Create(ClientProfile item);
+
+        IQueryable<ClientProfile> GetAll();
     }
 }

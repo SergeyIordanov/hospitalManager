@@ -1,4 +1,5 @@
-﻿using HospitalManager.Core.Enums;
+﻿using System.Collections.Generic;
+using HospitalManager.Core.Enums;
 
 namespace HospitalManager.BLL.DTO
 {
@@ -15,5 +16,7 @@ namespace HospitalManager.BLL.DTO
         public int Age { get; set; }
 
         public Gender Gender { get; set; }
+
+        public List<string> Roles { get; set; }
     }
 }

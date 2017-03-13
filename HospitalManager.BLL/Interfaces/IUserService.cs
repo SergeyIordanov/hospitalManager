@@ -20,5 +20,9 @@ namespace HospitalManager.BLL.Interfaces
         Task SetInitialDataAsync(UserDto adminDto, IEnumerable<string> roles);
 
         ClientProfileDto GetClientProfile(string userId);
+
+        Task ChangeUserRole(string userId, string role);
+
+        IEnumerable<ClientProfileDto> GetAllClientProfiles();
     }
 }

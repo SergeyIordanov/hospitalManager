@@ -1,0 +1,70 @@
+﻿@model List<HospitalManager.WEB.ViewModels.ClientProfileViewModel>
+@{
+    ViewBag.Title = "AdminPage";
+}
+
+<div class="container" style="margin-bottom: 180px">
+    <div class="row">
+        <div class="col s12 m12">
+            <p class="flow-text center">Users</p>
+            <hr />
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+
+                @foreach (var user in Model.Where(x => x.Roles.Contains("patient")))
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.Gender</td>
+                        <td>@user.Age</td>
+                        <td>@user.Address</td>
+                        <td><a class="waves-effect waves-light btn center" href="@Url.Action("ChangeRole", "User", new {userId = user.Id, role = "doctor"})">To Doctor</a></td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m12">
+            <p class="flow-text center">Admins</p>
+            <hr />
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+
+                @foreach (var user in Model.Where(x => x.Roles.Contains("doctor")))
+            {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.Gender</td>
+                        <td>@user.Age</td>
+                        <td>@user.Address</td>
+                        @if (!user.Email.Equals("admin@admin.com"))
+                        {
+                            <td>
+                                <a class="waves-effect waves-light btn center" href="@Url.Action("ChangeRole", "User", new {userId = user.Id, role = "patient"})">To Patient</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

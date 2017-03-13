@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using Microsoft.Owin.Security
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -15,62 +16,78 @@
 </head>
 
 <body>
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper white">
-                <a href="@Url.RouteUrl(new {controller = "Home", action = "Index"})" class="brand-logo">
-                    <span class="grey-text">HospitalManager</span>
-                </a>
-                
-                <ul class="right hide-on-med-and-down menu-link">
-                    @if (!User.Identity.IsAuthenticated)
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a href="@Url.RouteUrl(new {controller = "Home", action = "Index"})" id="logo-container" class="brand-logo">
+                <span>HospitalManager</span>
+            </a>
+            <ul class="right hide-on-med-and-down menu-link">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    
+                    <li>
+                        @Html.ActionLink("Register", "Register", "Account")
+                    </li>
+    
+                    <li>
+                        @Html.ActionLink("Login", "Login", "Account")
+                    </li>
+                    <li>
+                        @{ var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToList(); }
+    
+                        @using (Html.BeginForm("ExternalLogin", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+    
+                            <button type="submit" style="padding-top: 5px" class="btn-social btn-flat" id="@loginProviders.First().AuthenticationType"
+                                    name="provider" value="@loginProviders.First().AuthenticationType"
+                                    title="Log in using your @loginProviders.First().Caption" account>
+                                <img src="~/Content/Images/facebook.png" width="25" height="25"/>
+                            </button>
+    
+                        }
+                    </li>
+                }
+                else
+                {
+                    <span class="grey-text">Hello, @User.Identity.Name</span>
+                    if(User.IsInRole("doctor"))
                     {
-                        <li>
-                            @Html.ActionLink("Register", "Register", "Account")
-                        </li>
-
-                        <li>
-                            @Html.ActionLink("Login", "Login", "Account")
-                        </li>
-                    }
-                    else
-                    {
-                        <span class="grey-text">Hello, @User.Identity.Name</span>
                         <li class="right hide-on-med-and-down">
-                             @Html.ActionLink("Logout", "Logout", "Account")
+                            @Html.ActionLink("Administartion", "AdminPage", "User")
                         </li>
                     }
-                </ul>
-            </div>
-        </nav>
-    </div>
+                    <li class="right hide-on-med-and-down">
+                        @Html.ActionLink("Logout", "Logout", "Account")
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
 
-<main>
-    <div class="container">
-        @RenderBody()
-    </div>
-</main>
+    @RenderBody()
 
-    <footer class="page-footer white">
+    <footer class="page-footer teal">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                    <h5 class="footer-text">HospitalManager</h5>
-                    <p class="footer-text">Simple HospitalManager</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="footer-text">Links</h5>
-                    <ul>
-                        <li><a class="footer-text" href="@Url.RouteUrl(new {controller = "Home", action = "Index"})">Home</a></li>
-                        <li><a class="footer-text" href="@Url.RouteUrl(new {controller = "User", action = "UserPage"})">My profile</a></li>
+                    <h5 class="white-text">Company Bio</h5>
+                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
 
+                </div>
+                <div class="col l5 push-l1 s12">
+                    <h5 class="white-text">Connect</h5>
+                    <ul>
+                        <li><a class="white-text" href="https://www.facebook.com/Alex.budyanskiy">Oleksii Budianskyi</a></li>
+                        <li><a class="white-text" href="https://www.facebook.com/sergey.iordanov">Serhii Iordanov</a></li>
+                        <li><a class="white-text" href="https://www.linkedin.com/in/yevgeniy-tkachenko-8a07a0136/">Yevgeniy Tkachenko</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="footer-copyright">
-            <div class="container grey-text text-darken-1">
-                © 2017 All rights reserved.
+            <div class="container">
+                Made by <a class="brown-text text-lighten-3" href="http://nure.ua">NURE Students</a>
             </div>
         </div>
     </footer>
@@ -78,5 +95,6 @@
     <!-- Page scripts -->
     @Scripts.Render("~/Scripts/jquery-3.1.1.min.js")
     @Scripts.Render("~/Scripts/materialize.min.js")
+    @Scripts.Render("~/bundles/init")
 </body>
 </html>

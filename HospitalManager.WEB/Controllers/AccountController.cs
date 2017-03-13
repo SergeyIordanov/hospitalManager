@@ -72,7 +72,7 @@ namespace HospitalManager.WEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            // await SetInitialDataAsync();
+            //await SetInitialDataAsync();
 
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace HospitalManager.WEB.Controllers
                         Name = model.Name,
                         Gender = model.Gender,
                         Age = model.Age,
-                        Role = "user"
+                        Role = "patient"
                     };
 
                     await UserService.RegisterAsync(userDto);
@@ -179,7 +179,7 @@ namespace HospitalManager.WEB.Controllers
                     Address = model.Address,
                     Gender = model.Gender,
                     Age = model.Age,
-                    Role = "user"
+                    Role = "patient"
                 };
 
                 try
@@ -211,10 +211,10 @@ namespace HospitalManager.WEB.Controllers
                 Address = "Naukova ave., 2",
                 Gender = Gender.Male,
                 Age = 20,
-                Role = "admin"
+                Role = "doctor"
             };
 
-            var roles = new List<string> {"user", "admin"};
+            var roles = new List<string> {"patient", "doctor"};
 
             await UserService.SetInitialDataAsync(admin, roles);
         }

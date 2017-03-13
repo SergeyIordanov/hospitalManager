@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using HospitalManager.BLL.DTO;
@@ -47,6 +48,25 @@ namespace HospitalManager.WEB.Controllers
             };
 
             return View(userPageModel);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "doctor")]
+        public async Task<ActionResult> ChangeRole(string userId, string role)
+        {
+            await _userService.ChangeUserRole(userId, role);
+
+            return RedirectToAction("AdminPage");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "doctor")]
+        public ActionResult AdminPage()
+        {
+            var clientProfileDtos = _userService.GetAllClientProfiles();
+            var clientProfileViewModels = Mapper.Map<List<ClientProfileViewModel>>(clientProfileDtos);
+
+            return View(clientProfileViewModels);
         }
     }
 }
