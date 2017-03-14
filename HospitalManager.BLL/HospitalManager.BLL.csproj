@@ -82,7 +82,7 @@
     <Compile Include="Infrastructure\AutomapperRegistration\DtoToEntityProfile.cs" />
     <Compile Include="Infrastructure\AutomapperRegistration\EntityToDtoProfile.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
-    <Compile Include="Interfaces\ArtifactService.cs" />
+    <Compile Include="Interfaces\IArtifactService.cs" />
     <Compile Include="Interfaces\IPaymentService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,6 +6,8 @@ namespace HospitalManager.WEB.ViewModels
     {
         public IEnumerable<PaymentViewModel> Payments { get; set; }
 
+        public IEnumerable<ArtifactDisplayViewModel> Artifacts { get; set; }
+
         public ClientProfileViewModel ClientProfile { get; set; }
     }
 }

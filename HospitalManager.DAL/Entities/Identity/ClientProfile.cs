@@ -23,5 +23,7 @@ namespace HospitalManager.DAL.Entities.Identity
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual ICollection<Payment> Payments { get; set; }
+
+        public virtual ICollection<Artifact> Artifacts { get; set; }
     }
 }

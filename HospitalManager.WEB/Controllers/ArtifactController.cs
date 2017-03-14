@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Drawing;
+using System.IO;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using AutoMapper;
 using HospitalManager.BLL.DTO;
@@ -10,57 +13,74 @@ namespace HospitalManager.WEB.Controllers
 {
     public class ArtifactController : Controller
     {
-        private readonly IIllnessHistoryService _illnessHistoryService;
+        private readonly IArtifactService _illnessHistoryService;
 
-        public ArtifactController(IIllnessHistoryService illnessHistoryService)
+        public ArtifactController(IArtifactService illnessHistoryService)
         {
             _illnessHistoryService = illnessHistoryService;
         }
 
-        public ActionResult GetUserArtifacts()
+        [HttpGet]
+        public ActionResult Create()
         {
-            var artifactDtos = _illnessHistoryService.GetUserIllnessHistory(User.Identity.GetUserId());
-            var artifactViewModels = Mapper.Map<IEnumerable<ArtifactViewModel>>(artifactDtos);
-
-            return View("");
+            return View();
         }
 
-        public ActionResult Create(ArtifactViewModel artifact)
+        [HttpPost]
+        public ActionResult Create(ArtifactCreateViewModel artifact)
         {
             if (ModelState.IsValid)
             {
                 var artifactDto = Mapper.Map<ArtifactDto>(artifact);
-                _illnessHistoryService.Create(artifactDto);
+                var userId = User.Identity.GetUserId();
+                _illnessHistoryService.Create(artifactDto, userId);
             }
 
-            return RedirectToAction("");
+            return RedirectToAction("UserPage", "User");
         }
 
         public ActionResult Delete(int id)
         {
             _illnessHistoryService.Delete(id);
 
-            return RedirectToAction("");
-        }
-
-        public ActionResult Update(ArtifactViewModel artifact)
-        {
-            if (ModelState.IsValid)
-            {
-                var artifactDto = Mapper.Map<ArtifactDto>(artifact);
-                _illnessHistoryService.Update(artifactDto);
-            }
-
-            return RedirectToAction("");
+            return RedirectToAction("UserPage", "User");
         }
 
         public ActionResult GetArtifact(int id)
         {
-            var artifactDto = _illnessHistoryService.GetIllnessHistoryArtifact(id);
+            var artifactDto = _illnessHistoryService.GetArtifact(id);
 
-            var artifact = Mapper.Map<ArtifactViewModel>(artifactDto);
+            var artifact = Mapper.Map<ArtifactCreateViewModel>(artifactDto);
 
             return View("", artifact);
+        }
+
+        public ActionResult GetArtifactBytes(int id)
+        {
+            var artifactDto = _illnessHistoryService.GetArtifact(id);
+            var isImage = IsValidimage(artifactDto.Content);
+            
+            if (isImage)
+            {
+                return File(artifactDto.Content, "image/png");
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/placeholder50x50.png");
+            return File(fileBytes, "image/png");
+        }
+
+        private bool IsValidimage(byte[] bytes)
+        {
+            try
+            {
+                using(var ms = new MemoryStream(bytes))
+                    Image.FromStream(ms);
+            }
+            catch(ArgumentException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

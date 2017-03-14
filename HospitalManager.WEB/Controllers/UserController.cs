@@ -14,11 +14,13 @@ namespace HospitalManager.WEB.Controllers
     {
         private readonly IPaymentService _paymentService;
         private readonly IUserService _userService;
+        private readonly IArtifactService _artifactService;
 
-        public UserController(IPaymentService paymentService, IUserService userService)
+        public UserController(IPaymentService paymentService, IUserService userService, IArtifactService artifactService)
         {
             _paymentService = paymentService;
             _userService = userService;
+            _artifactService = artifactService;
         }
 
         [HttpGet]
@@ -40,11 +42,14 @@ namespace HospitalManager.WEB.Controllers
             var clientProfileViewModel = Mapper.Map<ClientProfileViewModel>(clientProfileDto);
             var paymentDtos = _paymentService.Get(userId, false);
             var paymentViewModels = Mapper.Map<IEnumerable<PaymentViewModel>>(paymentDtos);
+            var artifactDtos = _artifactService.GetUserArtifacts(userId);
+            var artifactViewModels = Mapper.Map<IEnumerable<ArtifactDisplayViewModel>>(artifactDtos);
 
             var userPageModel = new UserPageViewModel
             {
                 ClientProfile = clientProfileViewModel,
-                Payments = paymentViewModels
+                Payments = paymentViewModels,
+                Artifacts = artifactViewModels
             };
 
             return View(userPageModel);

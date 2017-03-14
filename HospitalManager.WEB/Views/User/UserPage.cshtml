@@ -38,4 +38,33 @@
         </table>
         <a class="waves-effect waves-light btn center" href="@Url.Action("Pay", "Payment")">Add payment</a>
     </div>
+    <div class="col s12 m6">
+        <p class="flow-text center">Artifacts</p>
+        <hr />
+        <table class="striped">
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Artifact</th>
+                <th><i class="material-icons">apps</i></th>
+            </tr>
+
+            @foreach(var artifact in Model.Artifacts)
+            {
+                <tr>
+                    <td>
+                        @artifact.Id
+                    </td>
+                    <td>@artifact.Description</td>
+                    <td>
+                        <img src="@Url.Action("GetArtifactBytes", "Artifact", new { id = artifact.Id })" height="50" width="50" alt="artifact"/>
+                    </td>
+                    <td>
+                        <a class="waves-effect waves-light btn-flat center" href="@Url.Action("Delete", "Artifact", new { id = artifact.Id })"><i class="material-icons">delete</i></a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <a class="waves-effect waves-light btn center" href="@Url.Action("Create", "Artifact")">Add artifact</a>
+    </div>
 </div>

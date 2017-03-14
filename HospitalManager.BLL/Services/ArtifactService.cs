@@ -9,7 +9,7 @@ using HospitalManager.DAL.Interfaces;
 
 namespace HospitalManager.BLL.Services
 {
-    public class ArtifactService : IIllnessHistoryService
+    public class ArtifactService : IArtifactService
     {
         private readonly IUnitOfWork _uow;
 
@@ -18,27 +18,13 @@ namespace HospitalManager.BLL.Services
             _uow = uow;
         }
 
-        public void Create(ArtifactDto artifactDto)
+        public void Create(ArtifactDto artifactDto, string userId)
         {
             var artifact = Mapper.Map<Artifact>(artifactDto);
+            var user = _uow.ClientManager.Get(userId);
+            artifact.ClientProfile = user;
 
             _uow.TreatmentArtifacts.Create(artifact);
-            _uow.Save();
-        }
-
-        public void Update(ArtifactDto artifactDto)
-        {
-            var artifact = _uow.TreatmentArtifacts.Get(artifactDto.Id);
-
-            if (artifact == null)
-            {
-                throw new EntityNotFoundException(
-                    $"Payment with such id cannot be found for update. Id: {artifact.Id}",
-                    "Payment");
-            }
-
-            Mapper.Map(artifactDto, artifact);
-            _uow.TreatmentArtifacts.Update(artifact);
             _uow.Save();
         }
 
@@ -53,11 +39,11 @@ namespace HospitalManager.BLL.Services
                     "TreatmentArtifact");
             }
 
-            _uow.Payments.Delete(id);
+            _uow.TreatmentArtifacts.Delete(id);
             _uow.Save();
         }
 
-        public IEnumerable<ArtifactDto> GetUserIllnessHistory(string id)
+        public IEnumerable<ArtifactDto> GetUserArtifacts(string id)
         {
             var artifacts = _uow.TreatmentArtifacts.Find(x => x.ClientProfile.Id.Equals(id)).ToList();
             var artifactDtos = Mapper.Map<IEnumerable<ArtifactDto>>(artifacts);
@@ -65,7 +51,7 @@ namespace HospitalManager.BLL.Services
             return artifactDtos;
         }
 
-        public ArtifactDto GetIllnessHistoryArtifact(int id)
+        public ArtifactDto GetArtifact(int id)
         {
             var artifact = _uow.TreatmentArtifacts.Get(id);
 

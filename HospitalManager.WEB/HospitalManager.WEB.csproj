@@ -237,9 +237,10 @@
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\ArtifactDisplayViewModel.cs" />
     <Compile Include="ViewModels\ClientProfileViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
-    <Compile Include="ViewModels\ArtifactViewModel.cs" />
+    <Compile Include="ViewModels\ArtifactCreateViewModel.cs" />
     <Compile Include="ViewModels\UserPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +248,7 @@
     <Content Include="Content\Images\background2.jpg" />
     <Content Include="Content\Images\background3.jpg" />
     <Content Include="Content\Images\facebook.png" />
+    <Content Include="Content\Images\placeholder50x50.png" />
     <Content Include="Content\styles.css" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -319,10 +321,10 @@
     <Content Include="Views\User\UserPage.cshtml" />
     <Content Include="Views\Payment\Pay.cshtml" />
     <Content Include="Views\User\AdminPage.cshtml" />
+    <Content Include="Views\Artifact\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\IllnessHistory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
