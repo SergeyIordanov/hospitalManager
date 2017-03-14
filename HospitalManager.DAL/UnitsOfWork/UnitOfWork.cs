@@ -23,6 +23,8 @@ namespace HospitalManager.DAL.UnitsOfWork
 
         private readonly Lazy<IRepository<Payment>> _paymentRepository;
 
+        private readonly Lazy<IRepository<TreatmentArtifact>> _treatmentArtifactRepository;
+
         private bool _disposed;
 
         public UnitOfWork(string connectionString)
@@ -33,6 +35,7 @@ namespace HospitalManager.DAL.UnitsOfWork
             _roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_databaseContext));
             _clientManager = new ClientManager(_databaseContext);
             _paymentRepository = new Lazy<IRepository<Payment>>(() => new CommonRepository<Payment>(_databaseContext));
+            _treatmentArtifactRepository = new Lazy<IRepository<TreatmentArtifact>>(() => new CommonRepository<TreatmentArtifact>(_databaseContext));
         }
 
         public ApplicationUserManager UserManager => _userManager ?? (_userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_databaseContext)));
@@ -42,6 +45,8 @@ namespace HospitalManager.DAL.UnitsOfWork
         public ApplicationRoleManager RoleManager => _roleManager ?? (_roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(_databaseContext)));
 
         public IRepository<Payment> Payments => _paymentRepository.Value;
+
+        public IRepository<TreatmentArtifact> TreatmentArtifacts => _treatmentArtifactRepository.Value;
 
         public async Task SaveAsync()
         {

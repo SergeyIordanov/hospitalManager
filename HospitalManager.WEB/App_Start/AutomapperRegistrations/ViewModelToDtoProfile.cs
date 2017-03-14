@@ -10,6 +10,7 @@ namespace HospitalManager.WEB.AutomapperRegistrations
         {
             CreateMap<ClientProfileViewModel, ClientProfileDto>();
             CreateMap<PaymentViewModel, PaymentDto>();
+            CreateMap<TreatmentArtifactViewModel, TreatmentArtifactDto>();
         }
     }
 }

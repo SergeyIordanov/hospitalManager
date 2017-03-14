@@ -15,6 +15,8 @@ namespace HospitalManager.DAL.Interfaces
 
         IRepository<Payment> Payments { get; }
 
+        IRepository<Artifact> TreatmentArtifacts { get; }
+
         void Save();
 
         Task SaveAsync();

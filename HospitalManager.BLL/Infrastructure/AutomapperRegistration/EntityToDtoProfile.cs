@@ -1,6 +1,7 @@
 using System.Linq;
 using AutoMapper;
 using HospitalManager.BLL.DTO;
+using HospitalManager.BLL.Esign;
 using HospitalManager.DAL.Entities;
 using HospitalManager.DAL.Entities.Identity;
 
@@ -15,6 +16,8 @@ namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
                 .ForMember(dto => dto.Roles, expression => expression
                     .MapFrom(profile => profile.ApplicationUser.Roles.Select(x =>x.RoleId)));
             CreateMap<Payment, PaymentDto>();
+            CreateMap<TreatmentArtifact, TreatmentArtifactDto>()
+                .ForMember(dto => dto.Artifact, expression => expression.MapFrom(artifact => artifact.Artifact.UnProtectBytes()));
         }
     }
 }

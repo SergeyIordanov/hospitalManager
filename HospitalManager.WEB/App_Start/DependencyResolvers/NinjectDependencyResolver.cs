@@ -31,10 +31,11 @@ namespace HospitalManager.WEB.DependencyResolvers
         {
             _kernel.Bind<IUserService>().To<UserService>().WithConstructorArgument("HospitalDatabase");
             _kernel.Bind<IPaymentService>().To<PaymentService>();
+            _kernel.Bind<IIllnessHistoryService>().To<IllnessHistoryService>();
 
             _kernel.Bind<ILogger>().ToMethod(p =>
             {
-                if (p.Request.Target != null && p.Request.Target.Member.DeclaringType != null)
+                if (p.Request.Target?.Member.DeclaringType != null)
                 {
                     return LogManager.GetLogger(p.Request.Target.Member.DeclaringType.ToString());
                 }
