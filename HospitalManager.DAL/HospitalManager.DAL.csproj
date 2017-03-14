@@ -63,7 +63,7 @@
     <Compile Include="Entities\Identity\ClientProfile.cs" />
     <Compile Include="Entities\BaseType.cs" />
     <Compile Include="Entities\Payment.cs" />
-    <Compile Include="Entities\TreatmentArtifact.cs" />
+    <Compile Include="Entities\Artifact.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserMangager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />

@@ -12,7 +12,7 @@ namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
         {
             CreateMap<ClientProfileDto, ClientProfile>();
             CreateMap<PaymentDto, Payment>();
-            CreateMap<TreatmentArtifactDto, TreatmentArtifact>().ForMember(artifact => artifact.Artifact, expression => expression.MapFrom(dto => dto.Artifact.ProtectBytes()));
+            CreateMap<ArtifactDto, Artifact>().ForMember(artifact => artifact.Artifact, expression => expression.MapFrom(dto => dto.Artifact.ProtectBytes()));
         }
     }
 }

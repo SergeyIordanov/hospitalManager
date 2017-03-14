@@ -16,7 +16,7 @@ namespace HospitalManager.BLL.Infrastructure.AutomapperRegistration
                 .ForMember(dto => dto.Roles, expression => expression
                     .MapFrom(profile => profile.ApplicationUser.Roles.Select(x =>x.RoleId)));
             CreateMap<Payment, PaymentDto>();
-            CreateMap<TreatmentArtifact, TreatmentArtifactDto>()
+            CreateMap<Artifact, ArtifactDto>()
                 .ForMember(dto => dto.Artifact, expression => expression.MapFrom(artifact => artifact.Artifact.UnProtectBytes()));
         }
     }

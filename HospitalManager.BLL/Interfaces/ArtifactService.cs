@@ -5,14 +5,14 @@ namespace HospitalManager.BLL.Interfaces
 {
     public interface IIllnessHistoryService
     {
-        void Create(TreatmentArtifactDto artifactDto);
+        void Create(ArtifactDto artifactDto);
 
-        void Update(TreatmentArtifactDto artifactDto);
+        void Update(ArtifactDto artifactDto);
 
         void Delete(int id);
 
-        IEnumerable<TreatmentArtifactDto> GetUserIllnessHistory(string id);
+        IEnumerable<ArtifactDto> GetUserIllnessHistory(string id);
 
-        TreatmentArtifactDto GetIllnessHistoryArtifact(int id);
+        ArtifactDto GetIllnessHistoryArtifact(int id);
     }
 }
