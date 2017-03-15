@@ -233,6 +233,10 @@
     </Compile>
     <Compile Include="Infrastructure\GlobalVaribles.cs" />
     <Compile Include="Infrastructure\Identity\ChallangeResult.cs" />
+    <Compile Include="Infrastructure\MimeTypesResolver\MimeTypesIdentifiers.cs" />
+    <Compile Include="Infrastructure\MimeTypesResolver\MimeTypesEnum.cs" />
+    <Compile Include="Infrastructure\MimeTypesResolver\GetEnumStringAttribute.cs" />
+    <Compile Include="Infrastructure\MimeTypesResolver\EnumStringValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
@@ -248,7 +252,10 @@
     <Content Include="Content\Images\background2.jpg" />
     <Content Include="Content\Images\background3.jpg" />
     <Content Include="Content\Images\facebook.png" />
+    <Content Include="Content\Images\pdfPlaceHolder.png" />
     <Content Include="Content\Images\placeholder50x50.png" />
+    <Content Include="Content\Images\txtPlaceHolder.png" />
+    <Content Include="Content\Images\wordPlaceHolder.png" />
     <Content Include="Content\styles.css" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />

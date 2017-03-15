@@ -46,7 +46,7 @@
                 <th>#</th>
                 <th>Description</th>
                 <th>Artifact</th>
-                <th><i class="material-icons">apps</i></th>
+                <th class="center"><i class="material-icons"></i></th>
             </tr>
 
             @foreach(var artifact in Model.Artifacts)
@@ -61,6 +61,7 @@
                     </td>
                     <td>
                         <a class="waves-effect waves-light btn-flat center" href="@Url.Action("Delete", "Artifact", new { id = artifact.Id })"><i class="material-icons">delete</i></a>
+                        <a class="waves-effect waves-light btn-flat center" href="@Url.Action("Download", "Artifact", new { id = artifact.Id })"><i class="material-icons">file_download</i></a>
                     </td>
                 </tr>
             }
