@@ -63,6 +63,7 @@
     <Compile Include="Entities\Identity\ClientProfile.cs" />
     <Compile Include="Entities\BaseType.cs" />
     <Compile Include="Entities\Payment.cs" />
+    <Compile Include="Entities\Artifact.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserMangager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
@@ -103,6 +104,10 @@
     <Compile Include="Migrations\201703080925123_RemovePaymentForeignKeyClientProfile.cs" />
     <Compile Include="Migrations\201703080925123_RemovePaymentForeignKeyClientProfile.Designer.cs">
       <DependentUpon>201703080925123_RemovePaymentForeignKeyClientProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703141046360_Added artifacts.cs" />
+    <Compile Include="Migrations\201703141046360_Added artifacts.Designer.cs">
+      <DependentUpon>201703141046360_Added artifacts.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703080925123_RemovePaymentForeignKeyClientProfile.resx">
       <DependentUpon>201703080925123_RemovePaymentForeignKeyClientProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703141046360_Added artifacts.resx">
+      <DependentUpon>201703141046360_Added artifacts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -24,6 +24,8 @@ namespace HospitalManager.DAL.EF
 
         public DbSet<Payment> Payments { get; set; }
 
+        public DbSet<Artifact> Artifacts { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<DatabaseContext>(null);
@@ -38,6 +40,11 @@ namespace HospitalManager.DAL.EF
             modelBuilder.Entity<ClientProfile>()
                 .HasMany(profile => profile.Payments)
                 .WithRequired(payment => payment.ClientProfile)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<ClientProfile>()
+                .HasMany(profile => profile.Artifacts)
+                .WithRequired(artifact => artifact.ClientProfile)
                 .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);

@@ -1,0 +1,30 @@
+﻿@model HospitalManager.WEB.ViewModels.ArtifactCreateViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row container" style="margin-bottom: 450px">
+    <div class="col s12 m6 push-m3">
+        <p class="flow-text center">New artifact</p>
+        <hr />
+        @using(Html.BeginForm("Create", "Artifact", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        { 
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="file" id="artifact" name="Content" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="details" name="description" required class="materialize-textarea"/>
+                    <label for="details">Details</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 push-s3 center">
+                    <input type="submit" class="waves-effect waves-light btn" value="Submit" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
