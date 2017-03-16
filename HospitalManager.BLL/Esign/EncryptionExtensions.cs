@@ -15,7 +15,7 @@ namespace HospitalManager.BLL.Esign
             }
 
             byte[] clearBytes = Encoding.UTF8.GetBytes(clearText);
-            byte[] encryptedBytes = ProtectedData.Protect(clearBytes, entropy, DataProtectionScope.CurrentUser);
+            byte[] encryptedBytes = ProtectedData.Protect(clearBytes, entropy, DataProtectionScope.LocalMachine);
             return Convert.ToBase64String(encryptedBytes);
         }
 
@@ -27,7 +27,7 @@ namespace HospitalManager.BLL.Esign
             }
 
             byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
-            byte[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropy, DataProtectionScope.CurrentUser);
+            byte[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropy, DataProtectionScope.LocalMachine);
             return Encoding.UTF8.GetString(clearBytes);
         }
 
@@ -38,7 +38,7 @@ namespace HospitalManager.BLL.Esign
                 throw new ArgumentNullException(nameof(clearBytes));
             }
 
-            byte[] encryptedBytes = ProtectedData.Protect(clearBytes, entropy, DataProtectionScope.CurrentUser);
+            byte[] encryptedBytes = ProtectedData.Protect(clearBytes, entropy, DataProtectionScope.LocalMachine);
             return encryptedBytes;
         }
 
@@ -49,7 +49,7 @@ namespace HospitalManager.BLL.Esign
                 throw new ArgumentNullException(nameof(encryptedBytes));
             }
 
-            byte[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropy, DataProtectionScope.CurrentUser);
+            byte[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropy, DataProtectionScope.LocalMachine);
             return clearBytes;
         }
     }
