@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Security.Cryptography;
-using HospitalManager.Core.Encryption;
 
 namespace HospitalManager.BLL.Esign
 {
