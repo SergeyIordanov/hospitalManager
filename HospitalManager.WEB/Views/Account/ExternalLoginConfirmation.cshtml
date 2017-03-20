@@ -20,6 +20,11 @@
                 logging in.
             </p>
             <div class="input-field">
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "red-text" })
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="input-field">
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "red-text" })
                 @Html.LabelFor(model => model.Email)
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
@@ -35,10 +40,12 @@
                 @Html.ValidationMessageFor(m => m.Age, "")
             </div>
             <div class="input-field">
-                <input name="Gender" type="radio" id="male" value="@Gender.Male" />
+                @{ var male = Model.Gender == Gender.Male ? "checked " : string.Empty;}
+                <input name="Gender" type="radio" id="male" value="@Gender.Male" @male/>
                 <label for="male">Male</label>
 
-                <input name="Gender" type="radio" id="female" value="@Gender.Female" />
+                @{ var female = Model.Gender == Gender.Female ? "checked " : string.Empty;}
+                <input name="Gender" type="radio" id="female" value="@Gender.Female" @female/>
                 <label for="female">Female</label>
                 @Html.ValidationMessageFor(m => m.Gender)
             </div>

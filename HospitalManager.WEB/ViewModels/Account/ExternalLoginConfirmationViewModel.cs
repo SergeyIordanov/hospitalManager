@@ -5,6 +5,8 @@ namespace HospitalManager.WEB.ViewModels.Account
 {
     public class ExternalLoginConfirmationViewModel
     {
+        public string Name { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }

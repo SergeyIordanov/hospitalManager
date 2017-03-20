@@ -4,6 +4,7 @@ using HospitalManager.BLL.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Facebook;
 using Ninject;
 using Owin;
 
@@ -31,7 +32,25 @@ namespace HospitalManager.WEB
 
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            app.UseFacebookAuthentication(appId: "823512164453406", appSecret: "5d14a2960f8533ad779621a1726507fb");
+            var x = new FacebookAuthenticationOptions();
+            x.Scope.Add("email");
+            x.Scope.Add("public_profile");
+            x.Scope.Add("user_birthday");
+            x.AppId = "823512164453406";
+            x.AppSecret = "5d14a2960f8533ad779621a1726507fb";
+
+            x.Provider = new FacebookAuthenticationProvider
+            {
+                OnAuthenticated = async context =>
+                {
+                    context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                }
+            };
+
+            x.SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie;
+            app.UseFacebookAuthentication(x);
+
+            //app.UseFacebookAuthentication(appId: "823512164453406", appSecret: "5d14a2960f8533ad779621a1726507fb");
         }
     }
 }
