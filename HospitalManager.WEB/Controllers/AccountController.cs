@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Facebook;
 using HospitalManager.BLL.DTO;
 using HospitalManager.BLL.Exceptions;
 using HospitalManager.BLL.Interfaces;
 using HospitalManager.Core.Enums;
+using HospitalManager.WEB.Infrastructure;
 using HospitalManager.WEB.Infrastructure.Identity;
 using HospitalManager.WEB.ViewModels.Account;
 using Microsoft.AspNet.Identity.Owin;
@@ -131,11 +134,16 @@ namespace HospitalManager.WEB.Controllers
         public async Task<ActionResult> ExternalLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-
+            
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
             }
+
+            var facebookAccessToken = loginInfo.ExternalIdentity.Claims.First(x => x.Type.Equals("FacebookAccessToken"));
+
+            var fb = new FacebookClient(facebookAccessToken.Value);
+            dynamic userInfo = fb.Get("me?fields=id,name,email,gender,birthday");
 
             var claim = await UserService.ExternalSignInAsync(loginInfo.Login);
 
@@ -146,7 +154,15 @@ namespace HospitalManager.WEB.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var externalRegisterViewModel = new ExternalLoginConfirmationViewModel { Email = loginInfo.Email };
+            var age = GlobalVaribles.TemplateUserNames.Contains(userInfo.name) ? 35 : 18;
+
+            var externalRegisterViewModel = new ExternalLoginConfirmationViewModel
+            {
+                Name = userInfo.name,
+                Email = userInfo.email,
+                Gender = userInfo.gender.Equals("female") ? Gender.Female : Gender.Male,
+                Age = age
+            };
 
             return View("ExternalLoginConfirmation", externalRegisterViewModel);
         }
