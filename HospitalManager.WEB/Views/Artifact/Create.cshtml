@@ -13,11 +13,12 @@
                 <div class="input-field file-field col s12">
                     <div class="waves-effect waves-light btn">
                         <i class="material-icons">file_upload</i>
-                        <input type="file" id="artifact" name="Content" class="ng-hide" required />
+                        <input type="file" id="artifact" name="Content" required />
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text" placeholder="Upload one artifact (5 MB max size)">
                     </div>
+                    <h6 id="fileValidation"></h6>
                     @Html.ValidationMessageFor(model => model.Content, "", new {style = "color:red"})
                 </div>
             </div>
@@ -35,3 +36,15 @@
         }
     </div>
 </div>
+
+@section scripts{
+    <script>
+    $('#artifact').bind('change', function() {
+        if (this.files[0].size > 5000000) {
+            $("#fileValidation").innerHTML = "This file is too big! (5MB maximum)";
+        } else {
+            $("#fileValidation").innerHTML = "File is gucci";
+        }
+    });
+</script>
+}
