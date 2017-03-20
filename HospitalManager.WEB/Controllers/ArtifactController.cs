@@ -70,6 +70,11 @@ namespace HospitalManager.WEB.Controllers
                 placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/wordPlaceHolder.png");
                 return File(placeholder, "image/png");
             }
+            if (IsZip(artifactDto.Content))
+            {
+                placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/zipPlaceHolder.png");
+                return File(placeholder, "image/png");
+            }
 
             placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/txtPlaceHolder.png");
             return File(placeholder, "image/png");
@@ -94,6 +99,8 @@ namespace HospitalManager.WEB.Controllers
                     return File(ms, fstring, "Artifact.pdf");
                 case StringValueEnum.Txt:
                     return File(ms, fstring, "Artifact.txt");
+                case StringValueEnum.Zip:
+                    return File(ms, fstring, "Artifact.zip");
                 default:
                     throw new NotImplementedException();
             }
@@ -103,7 +110,7 @@ namespace HospitalManager.WEB.Controllers
         {
             var mime = StringValueEnum.Txt;
 
-            if(Encoding.UTF8.GetString(file).Contains(MimeTypesIdentifiers.Word))
+            if(IsWord(file))
             {
                 mime = StringValueEnum.Docx;
             }
@@ -111,13 +118,17 @@ namespace HospitalManager.WEB.Controllers
             {
                 mime = StringValueEnum.Jpg;
             }
-            else if(file.Take(7).SequenceEqual(MimeTypesIdentifiers.Pdf))
+            else if(IsPdf(file))
             {
                 mime = StringValueEnum.Pdf;
             }
             else if(file.Take(16).SequenceEqual(MimeTypesIdentifiers.Png))
             {
                 mime = StringValueEnum.Png;
+            }
+            else if (IsZip(file))
+            {
+                mime = StringValueEnum.Zip;
             }
 
             return mime;
@@ -147,6 +158,11 @@ namespace HospitalManager.WEB.Controllers
         private bool IsWord(byte[] bytes)
         {
             return Encoding.UTF8.GetString(bytes).Contains(MimeTypesIdentifiers.Word);
+        }
+
+        private bool IsZip(byte[] bytes)
+        {
+            return bytes.Take(4).SequenceEqual(MimeTypesIdentifiers.Zip);
         }
     }
 }

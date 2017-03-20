@@ -253,6 +253,7 @@
     <Compile Include="ViewModels\UserPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\zipPlaceHolder.png" />
     <Content Include="Content\Images\background1.jpg" />
     <Content Include="Content\Images\background2.jpg" />
     <Content Include="Content\Images\background3.jpg" />
