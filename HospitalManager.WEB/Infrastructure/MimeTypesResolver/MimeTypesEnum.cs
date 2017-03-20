@@ -15,6 +15,9 @@
         Png = 4,
 
         [EnumStringValue("application/octet-stream")]
-        Txt = 5
+        Txt = 5,
+
+        [EnumStringValue("application/zip")]
+        Zip = 6
     }
 }

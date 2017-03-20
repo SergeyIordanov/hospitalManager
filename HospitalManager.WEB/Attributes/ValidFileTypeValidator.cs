@@ -11,7 +11,7 @@ namespace HospitalManager.WEB.Attributes
     {
         private const int MaxFileSize = 5000000;
 
-        private static readonly string[] ValidFileFormats = {".pdf", ".docx", ".png", ".jpg", ".jpeg", ".txt"};
+        private static readonly string[] ValidFileFormats = {".pdf", ".docx", ".png", ".jpg", ".jpeg", ".txt", ".zip"};
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -35,7 +35,7 @@ namespace HospitalManager.WEB.Attributes
             }
             return ValidFileFormats.Any(x => x.Equals(ext, StringComparison.OrdinalIgnoreCase)) 
                 ? ValidationResult.Success 
-                : new ValidationResult("Possible file extensions are PDF, DOCX, JPG, PNG, JPEG and TXT!");
+                : new ValidationResult("Possible file extensions are PDF, DOCX, JPG, PNG, JPEG, ZIP and TXT!");
         }
     }
 }
