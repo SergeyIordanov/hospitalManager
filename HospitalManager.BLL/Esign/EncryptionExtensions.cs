@@ -48,7 +48,7 @@ namespace HospitalManager.BLL.Esign
                 throw new ArgumentNullException(nameof(encryptedBytes));
             }
 
-            byte[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropy, DataProtectionScope.CurrentUser);
+            byte[] clearBytes = ProtectedData.Unprotect(encryptedBytes, entropy, DataProtectionScope.LocalMachine);
             return clearBytes;
         }
     }
