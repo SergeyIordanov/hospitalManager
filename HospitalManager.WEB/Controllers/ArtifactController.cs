@@ -16,11 +16,11 @@ namespace HospitalManager.WEB.Controllers
 {
     public class ArtifactController : Controller
     {
-        private readonly IArtifactService _illnessHistoryService;
+        private readonly IArtifactService _artifactService;
 
-        public ArtifactController(IArtifactService illnessHistoryService)
+        public ArtifactController(IArtifactService artifactService)
         {
-            _illnessHistoryService = illnessHistoryService;
+            _artifactService = artifactService;
         }
 
         [HttpGet]
@@ -36,22 +36,24 @@ namespace HospitalManager.WEB.Controllers
             {
                 var artifactDto = Mapper.Map<ArtifactDto>(artifact);
                 var userId = User.Identity.GetUserId();
-                _illnessHistoryService.Create(artifactDto, userId);
+                _artifactService.Create(artifactDto, userId);
+
+                return RedirectToAction("UserPage", "User");
             }
 
-            return RedirectToAction("UserPage", "User");
+            return View("Create", artifact);
         }
 
         public ActionResult Delete(int id)
         {
-            _illnessHistoryService.Delete(id);
+            _artifactService.Delete(id);
 
             return RedirectToAction("UserPage", "User");
         }
 
         public ActionResult GetArtifactBytes(int id)
         {
-            var artifactDto = _illnessHistoryService.GetArtifact(id);
+            var artifactDto = _artifactService.GetArtifact(id);
             byte[] placeholder;
 
             if (IsValidimage(artifactDto.Content))
@@ -75,7 +77,7 @@ namespace HospitalManager.WEB.Controllers
 
         public ActionResult Download(int id)
         {
-            var imageBytes = _illnessHistoryService.GetArtifact(id);
+            var imageBytes = _artifactService.GetArtifact(id);
             var ms = new MemoryStream(imageBytes.Content);
             var mimetype = GetMimeType(imageBytes.Content);
             var fstring = mimetype.GetStringValue();

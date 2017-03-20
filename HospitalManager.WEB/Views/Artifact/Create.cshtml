@@ -6,12 +6,19 @@
 <div class="row container" style="margin-bottom: 450px">
     <div class="col s12 m6 push-m3">
         <p class="flow-text center">New artifact</p>
-        <hr />
-        @using(Html.BeginForm("Create", "Artifact", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        { 
+        <hr/>
+        @using (Html.BeginForm("Create", "Artifact", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
             <div class="row">
-                <div class="input-field col s12">
-                    <input type="file" id="artifact" name="Content" required/>
+                <div class="input-field file-field col s12">
+                    <div class="waves-effect waves-light btn">
+                        <i class="material-icons">file_upload</i>
+                        <input type="file" id="artifact" name="Content" class="ng-hide" required />
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload one artifact (5 MB max size)">
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Content, "", new {style = "color:red"})
                 </div>
             </div>
             <div class="row">
@@ -22,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s6 push-s3 center">
-                    <input type="submit" class="waves-effect waves-light btn" value="Submit" />
+                    <input type="submit" class="waves-effect waves-light btn" value="Submit"/>
                 </div>
             </div>
         }
