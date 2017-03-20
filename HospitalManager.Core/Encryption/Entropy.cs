@@ -2,6 +2,6 @@
 {
     public static class Entropy
     {
-        public static byte[] EntropyBytes = {1, 2, 3, 4, 5};
+        public static readonly byte[] EntropyBytes = {1, 2, 3, 4, 5};
     }
 }
