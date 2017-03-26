@@ -57,7 +57,7 @@
                     </td>
                     <td>@artifact.Description</td>
                     <td>
-                        <img src="@Url.Action("GetArtifactBytes", "Artifact", new { id = artifact.Id })" height="50" width="50" alt="artifact"/>
+                        <img src="@Url.Action("GetArtifactBytes", "Artifact", new { extension = artifact.Extension })" height="50" width="50" alt="artifact"/>
                     </td>
                     <td>
                         <a class="waves-effect waves-light btn-flat center" href="@Url.Action("Delete", "Artifact", new { id = artifact.Id })"><i class="material-icons">delete</i></a>

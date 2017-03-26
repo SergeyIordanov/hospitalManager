@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using AutoMapper;
 using HospitalManager.BLL.DTO;
+using HospitalManager.BLL.Esign;
 using HospitalManager.BLL.Interfaces;
+using HospitalManager.Core.Encryption;
 using HospitalManager.WEB.Infrastructure.MimeTypesResolver;
 using HospitalManager.WEB.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -35,7 +37,23 @@ namespace HospitalManager.WEB.Controllers
             if (ModelState.IsValid)
             {
                 var artifactDto = Mapper.Map<ArtifactDto>(artifact);
+
                 var userId = User.Identity.GetUserId();
+                var userFolder = HostingEnvironment.ApplicationPhysicalPath + $"Content\\Artifacts\\{userId}";
+                artifactDto.Extension = Path.GetExtension(artifact.Content.FileName);
+                artifactDto.Path = userFolder + "\\" + artifact.Description;
+                Directory.CreateDirectory(userFolder);
+
+                using (var fs = System.IO.File.Create(userFolder + "\\" + artifact.Description))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        artifact.Content.InputStream.CopyTo(ms);
+                        var test = ms.GetBuffer().ProtectBytes(Entropy.EntropyBytes);
+                        fs.Write(test, 0, test.Length);
+                    }
+                }
+
                 _artifactService.Create(artifactDto, userId);
 
                 return RedirectToAction("UserPage", "User");
@@ -44,6 +62,7 @@ namespace HospitalManager.WEB.Controllers
             return View("Create", artifact);
         }
 
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             _artifactService.Delete(id);
@@ -51,40 +70,42 @@ namespace HospitalManager.WEB.Controllers
             return RedirectToAction("UserPage", "User");
         }
 
-        public ActionResult GetArtifactBytes(int id)
+        public ActionResult GetArtifactBytes(string extension)
         {
-            var artifactDto = _artifactService.GetArtifact(id);
-            byte[] placeholder;
-
-            if (IsValidimage(artifactDto.Content))
+            switch (extension)
             {
-                return File(artifactDto.Content, "image/png");
+                case ".png":
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/pngPlaceHolder.png"), "image/png");
+                case ".jpg":
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/jpgPlaceHolder.png"), "image/png");
+                case ".jpeg":
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/jpgPlaceHolder.png"), "image/png");
+                case ".pdf":
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/pdfPlaceHolder.png"), "image/png");
+                case ".docx":
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/wordPlaceHolder.png"), "image/png");
+                case ".zip":
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/zipPlaceHolder.png"), "image/png");
+                default:
+                    return File(System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath
+                        + "/Content/Images/txtPlaceHolder.png"), "image/png");
             }
-            if (IsPdf(artifactDto.Content))
-            {
-                placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/pdfPlaceHolder.png");
-                return File(placeholder, "image/png");
-            }
-            if (IsWord(artifactDto.Content))
-            {
-                placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/wordPlaceHolder.png");
-                return File(placeholder, "image/png");
-            }
-            if (IsZip(artifactDto.Content))
-            {
-                placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/zipPlaceHolder.png");
-                return File(placeholder, "image/png");
-            }
-
-            placeholder = System.IO.File.ReadAllBytes(HostingEnvironment.ApplicationPhysicalPath + "/Content/Images/txtPlaceHolder.png");
-            return File(placeholder, "image/png");
         }
 
         public ActionResult Download(int id)
         {
             var imageBytes = _artifactService.GetArtifact(id);
-            var ms = new MemoryStream(imageBytes.Content);
-            var mimetype = GetMimeType(imageBytes.Content);
+            var userId = User.Identity.GetUserId();
+            var artifactPath = HostingEnvironment.ApplicationPhysicalPath + $"Content\\Artifacts\\{userId}\\{imageBytes.Description}";
+            var bytes = System.IO.File.ReadAllBytes(artifactPath).UnProtectBytes(Entropy.EntropyBytes);
+            var ms = new MemoryStream(bytes);
+            var mimetype = GetMimeType(bytes);
             var fstring = mimetype.GetStringValue();
 
             switch (mimetype)
@@ -132,22 +153,6 @@ namespace HospitalManager.WEB.Controllers
             }
 
             return mime;
-        }
-
-        private bool IsValidimage(byte[] bytes)
-        {
-            try
-            {
-                using (var ms = new MemoryStream(bytes))
-                {
-                    Image.FromStream(ms);
-                }
-            }
-            catch(ArgumentException)
-            {
-                return false;
-            }
-            return true;
         }
 
         private bool IsPdf(byte[] bytes)
