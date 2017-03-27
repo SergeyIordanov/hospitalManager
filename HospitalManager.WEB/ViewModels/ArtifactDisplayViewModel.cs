@@ -6,6 +6,6 @@
 
         public string Description { get; set; }
 
-        public byte[] Content { get; set; }
+        public string Extension { get; set; }
     }
 }

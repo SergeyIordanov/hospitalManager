@@ -8,10 +8,13 @@ namespace HospitalManager.DAL.Entities
     public class Artifact : BaseType
     {
         [Required]
-        public byte[] Content { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public string Extension { get; set; }
+
+        [Required]
+        public string Path { get; set; }
 
         [Required]
         public virtual ClientProfile ClientProfile { get; set; }
